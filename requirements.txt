@@ -1,0 +1,23 @@
+# Core Python utilities
+jinja2==3.1.4
+pandas==2.2.2
+numpy==2.1.2
+
+# Graph analysis and clustering
+networkx==3.2.1
+python-louvain==0.16
+
+# Machine learning (TF-IDF, KMeans, PCA, metrics)
+scikit-learn==1.5.2
+
+# Validation
+jsonschema>=4.19,<5
+
+# Visualization
+matplotlib==3.9.2
+
+# Experiment tracking
+mlflow==2.16.2
+
+# Optional: interactive exploration
+jupyter==1.0.0

@@ -1,0 +1,15 @@
+artifact_uri: file:///mnt/c/Users/ircal/OneDrive/AIML/aiml-glossary/mlruns/608711527902205601/031796b9260b4275869977e4c8eb43d0/artifacts
+end_time: 1764730424928
+entry_point_name: ''
+experiment_id: '608711527902205601'
+lifecycle_stage: active
+run_id: 031796b9260b4275869977e4c8eb43d0
+run_name: ari-dashboard-local
+run_uuid: 031796b9260b4275869977e4c8eb43d0
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1764730424184
+status: 3
+tags: []
+user_id: ian

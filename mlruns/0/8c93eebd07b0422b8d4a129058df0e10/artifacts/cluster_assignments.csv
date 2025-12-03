@@ -1,0 +1,97 @@
+term,cluster_id
+Supervised Learning,0
+Unsupervised Learning,1
+Classification,0
+Regression,0
+Clustering,1
+Data Cleaning,2
+Feature Scaling,3
+Dimensionality Reduction,4
+Encoding Categorical Variables,5
+Feature Extraction,4
+Cross-Validation,36
+Confusion Matrix,7
+Precision,7
+Recall,7
+F1 Score,7
+Hyperparameter Tuning,8
+Grid Search,8
+Random Search,8
+Bayesian Optimization,8
+Early Stopping,36
+Artificial Neural Network,9
+Activation Function,10
+Backpropagation,11
+Convolutional Neural Network,12
+Recurrent Neural Network,13
+Model Deployment,14
+Model Serving,14
+Monitoring,15
+A/B Testing,16
+Rollback,15
+Concept Drift,15
+Temporal Dependency,18
+Replay Methods,19
+Regularization Methods,20
+Isolation Methods,21
+Symbolic Regression,37
+Genetic Programming,37
+Randomized Algorithms,23
+Computational Complexity,24
+Symbolic AI,25
+Skipgram,26
+Word2Vec,26
+Distribution Hypothesis,26
+Text Representation,26
+Word Representation,26
+Simulated Annealing,27
+Monte Carlo Algorithm,23
+Las Vegas Algorithm,23
+Pseudocode,28
+Continual Learning,15
+Random Forest,0
+Adaptive Random Forest (ARF),15
+Ensembles,31
+Naive Bayes,32
+Decision Tree,0
+k-Nearest Neighbors (k-NN),33
+Adaptive Machine Learning (Adaptive ML),15
+Explainable AI (XAI),34
+Bootstrap Aggregating (Bagging),0
+Ensemble Learning,0
+Tournament Selection,36
+Parsimony Pressure,36
+Bloat,36
+Underfitting,36
+Overfitting,36
+Bias-Variance Trade-off,36
+Generalization,36
+Mutation,37
+Crossover,37
+Lexicase Selection,36
+Fitness Function,36
+Expression Tree,37
+Monte Carlo Tree Search (MCTS),38
+Bayesian Symbolic Regression,37
+Service‑oriented Computing (SOC),39
+Implicit Graphs,40
+Depth First Search (DFS),40
+Breadth First Search (BFS),40
+Graph Connectivity,41
+Greedy Search (Greedy Algorithm),42
+Traveling Salesman Problem (TSP),43
+Graph Search,40
+Tabu Search,27
+Word Embedding,26
+Softmax Function,44
+Causal Mask,45
+Sequence-to-Sequence Model,35
+Recurrent Neural Network (RNN),6
+BLEU (Bilingual Evaluation Understudy),17
+WMT Translation Task,22
+Constituency Parsing,29
+Context Vector,35
+Recurrence,30
+Convolutions,45
+Transformer,45
+Self-Attention,45

@@ -1,0 +1,15 @@
+artifact_uri: file:///mnt/c/Users/ircal/OneDrive/AIML/aiml-glossary/mlruns/608711527902205601/38b652e06e0940bb80c5951d72d05ee5/artifacts
+end_time: 1764730422143
+entry_point_name: ''
+experiment_id: '608711527902205601'
+lifecycle_stage: active
+run_id: 38b652e06e0940bb80c5951d72d05ee5
+run_name: cluster-comparison-local
+run_uuid: 38b652e06e0940bb80c5951d72d05ee5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1764730421362
+status: 3
+tags: []
+user_id: ian

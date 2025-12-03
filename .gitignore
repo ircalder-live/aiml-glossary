@@ -1,0 +1,26 @@
+# Ignore Python virtual environments
+.venv/
+venv/
+
+# Ignore Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore build and distribution directories
+build/
+dist/
+*.egg-info/
+
+# Ignore generated outputs
+output/
+visualizations/
+
+# Ignore coverage and test artifacts
+.coverage
+htmlcov/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db

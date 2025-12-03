@@ -1,0 +1,99 @@
+term,cluster_id
+Supervised Learning,5
+Unsupervised Learning,5
+Classification,5
+Regression,5
+Clustering,5
+Data Cleaning,5
+Feature Scaling,4
+Dimensionality Reduction,6
+Encoding Categorical Variables,1
+Feature Extraction,4
+Cross-Validation,4
+Confusion Matrix,6
+Precision,6
+Recall,6
+F1 Score,5
+Hyperparameter Tuning,4
+Grid Search,7
+Random Search,2
+Bayesian Optimization,4
+Early Stopping,4
+Artificial Neural Network,3
+Activation Function,2
+Backpropagation,3
+Convolutional Neural Network,5
+Recurrent Neural Network,3
+Model Deployment,6
+Model Serving,1
+Monitoring,4
+A/B Testing,4
+Rollback,3
+Concept Drift,4
+Temporal Dependency,2
+Replay Methods,5
+Regularization Methods,5
+Isolation Methods,1
+Symbolic Regression,7
+Genetic Programming,0
+Randomized Algorithms,1
+Computational Complexity,0
+Symbolic AI,5
+Skipgram,5
+Word2Vec,2
+Distribution Hypothesis,1
+Text Representation,1
+Word Representation,1
+Simulated Annealing,2
+Monte Carlo Algorithm,2
+Las Vegas Algorithm,0
+Pseudocode,0
+Continual Learning,5
+Random Forest,1
+Adaptive Random Forest (ARF),1
+Ensembles,1
+Naive Bayes,2
+Decision Tree,1
+k-Nearest Neighbors (k-NN),5
+Adaptive Machine Learning (Adaptive ML),5
+Explainable AI (XAI),1
+Bootstrap Aggregating (Bagging),1
+Ensemble Learning,1
+Tournament Selection,0
+Parsimony Pressure,0
+Bloat,1
+Underfitting,1
+Overfitting,1
+Bias-Variance Trade-off,1
+Generalization,4
+Mutation,1
+Crossover,5
+Lexicase Selection,1
+Fitness Function,0
+Expression Tree,5
+Monte Carlo Tree Search (MCTS),0
+Bayesian Symbolic Regression,7
+Service‑oriented Computing (SOC),3
+Implicit Graphs,3
+Depth First Search (DFS),7
+Breadth First Search (BFS),7
+Graph Connectivity,7
+Greedy Search (Greedy Algorithm),3
+Traveling Salesman Problem (TSP),7
+Graph Search,7
+Tabu Search,7
+Simulated Annealing,2
+Word Embedding,5
+Softmax Function,2
+Causal Mask,3
+Sequence-to-Sequence Model,3
+Recurrent Neural Network (RNN),3
+BLEU (Bilingual Evaluation Understudy),2
+WMT Translation Task,2
+Ensembles,1
+Constituency Parsing,2
+Context Vector,3
+Recurrence,3
+Convolutions,3
+Transformer,3
+Self-Attention,3

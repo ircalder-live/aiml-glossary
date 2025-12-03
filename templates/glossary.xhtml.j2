@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>AIML Glossary</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.4; margin: 1em; background-color: #fafafa; }
+    h1 { color: #2c3e50; font-size: 1.4em; margin-top: 1em; }
+    dt { font-weight: bold; margin-top: 1em; font-size: 1.1em; color: #1a1a1a; }
+    dd { margin-left: 0; margin-bottom: 1em; font-size: 1em; }
+    .tags, .related { color: #555; font-style: italic; margin-top: 0.3em; }
+    .examples { margin-top: 0.3em; padding-left: 1em; }
+    @media (max-width: 600px) {
+      body { margin: 0.5em; font-size: 0.95em; }
+      h1 { font-size: 1.2em; }
+      dt { font-size: 1em; }
+      dd { font-size: 0.95em; }
+    }
+  </style>
+</head>
+<body>
+  <h1>AIML Glossary</h1>
+  <dl>
+  {% for entry in glossary %}
+    <dt id="{{ entry.term | replace(' ', '_') | e }}">{{ entry.term | e }}</dt>
+    <dd>
+      <p>{{ entry.definition | e }}</p>
+      <p class="tags">Tags: {% for tag in entry.tags %}<a href="{{ tag.url | e }}">{{ tag.label | e }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+      <p class="related">Related Terms: {% for rel in entry.related_terms %}<a href="{{ rel.url | e }}">{{ rel.label | e }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+      {% if entry.examples %}
+      <ul class="examples">{% for ex in entry.examples %}<li>{{ ex | e }}</li>{% endfor %}</ul>
+      {% endif %}
+      <p>Source: {{ entry.source | e }}</p>
+      <p>Last Updated: {{ entry.last_updated | e }}</p>
+    </dd>
+  {% endfor %}
+  </dl>
+</body>
+</html>

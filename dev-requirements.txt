@@ -1,0 +1,25 @@
+# Development requirements for AIML Glossary Project
+
+# Testing framework
+pytest==8.3.3
+
+# Linting and style checks
+ruff==0.6.9
+
+# Coverage reporting
+coverage==7.6.1
+
+# Optional: pre-commit hooks for consistent formatting
+pre-commit==4.0.1
+
+
+# Notes:
+# pytest: runs your unit tests (make test).
+# ruff: fast linter used in your Makefile (make lint).
+# coverage: optional, but useful if you want to measure test coverage.
+# pre-commit: optional, lets you enforce linting/formatting before commits.
+# Usage: Install dev dependencies separately from runtime.
+# $ pip install -r dev-requirements.txt
+# This keeps your production environment lean while giving contributors the right tools for development.
+# You can customize this file by adding other dev tools as needed.
+# Remember to keep versions in sync with requirements.txt where applicable.

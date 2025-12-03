@@ -1,0 +1,526 @@
+term,graph_cluster
+Supervised Learning,10
+Classification,10
+Regression,10
+machine learning,10
+labeled data,10
+prediction,10
+Unsupervised Learning,4
+Clustering,4
+Principal Component Analysis,4
+clustering,4
+dimensionality reduction,4
+pattern discovery,4
+Logistic Regression,10
+Decision Tree,2
+supervised learning,10
+discrete output,10
+Linear Regression,10
+Polynomial Regression,10
+continuous output,10
+K-Means,4
+Hierarchical Clustering,4
+unsupervised learning,4
+grouping,4
+similarity,4
+Data Cleaning,3
+Outlier Detection,3
+Missing Value Imputation,3
+data preprocessing,3
+quality assurance,3
+missing values,3
+Feature Scaling,4
+Min-Max Scaling,4
+StandardScaler,4
+normalization,4
+standardization,4
+preprocessing,4
+Dimensionality Reduction,4
+t-SNE,4
+feature engineering,4
+PCA,4
+data compression,4
+Encoding Categorical Variables,4
+One-Hot Encoding,4
+Label Encoding,4
+categorical data,4
+encoding,4
+Feature Extraction,4
+Feature Selection,4
+transformation,4
+Cross-Validation,5
+Train-Test Split,5
+K-Fold Cross-Validation,5
+model evaluation,5
+validation,5
+resampling,5
+Confusion Matrix,6
+Precision,6
+Recall,6
+F1 Score,6
+classification,6
+evaluation,6
+metrics,6
+Hyperparameter Tuning,0
+Grid Search,0
+Random Search,0
+Bayesian Optimization,0
+optimization,0
+model tuning,15
+hyperparameters,0
+hyperparameter tuning,0
+grid search,0
+model selection,0
+random sampling,0
+Gaussian Process,0
+Acquisition Function,0
+bayesian methods,0
+Early Stopping,15
+Validation Set,15
+Overfitting,5
+regularization,15
+overfitting prevention,15
+Artificial Neural Network,10
+Perceptron,10
+Multilayer Perceptron,10
+deep learning,10
+neural networks,10
+Activation Function,10
+ReLU,10
+Sigmoid,10
+Tanh,10
+non-linearity,10
+Backpropagation,10
+Gradient Descent,10
+Loss Function,10
+training,10
+Convolutional Neural Network,10
+Pooling,10
+Feature Maps,10
+computer vision,10
+CNN,10
+Recurrent Neural Network,11
+LSTM,11
+GRU,11
+sequence modeling,11
+RNN,11
+Model Deployment,13
+Model Serving,13
+API,13
+deployment,13
+production,13
+ML lifecycle,13
+REST API,13
+inference,13
+scalability,13
+Monitoring,13
+Concept Drift,14
+Logging,13
+observability,13
+performance,13
+ML operations,13
+A/B Testing,13
+Model Comparison,13
+Online Testing,13
+experimentation,13
+Rollback,13
+Model Versioning,13
+reliability,13
+version control,13
+Data Drift,14
+Model Monitoring,14
+stream learning,11
+non-stationarity,14
+adaptation,14
+Temporal Dependency,11
+Autocorrelation,11
+Lag Features,11
+time series,11
+Replay Methods,15
+Experience Replay,15
+Episodic Memory,15
+continual learning,15
+memory,15
+rehearsal,15
+Regularization Methods,15
+Elastic Weight Consolidation,15
+L2 Regularization,15
+stability,15
+Isolation Methods,15
+Progressive Networks,15
+Dynamic Architectures,15
+modularity,15
+task separation,15
+Symbolic Regression,16
+Genetic Programming,16
+Expression Trees,16
+symbolic AI,16
+regression,16
+genetic programming,16
+Genetic Algorithms,16
+evolutionary algorithms,16
+Randomized Algorithms,17
+Monte Carlo Methods,17
+Las Vegas Algorithms,17
+probabilistic algorithms,17
+complexity,17
+Computational Complexity,18
+Big O Notation,18
+P vs NP,18
+theoretical computer science,18
+efficiency,18
+algorithms,18
+Symbolic AI,19
+Rule-Based Systems,19
+Ontologies,19
+Knowledge Graphs,19
+knowledge_representation,19
+logic,19
+expert systems,19
+Skipgram,20
+Word2Vec,20
+CBOW,20
+Word Embedding,20
+Distribution Hypothesis,20
+natural_language_processing,20
+word_embeddings,20
+representation_learning,20
+word embedding,20
+neural_networks,20
+Semantic Similarity,20
+Contextual Embedding,20
+semantics,20
+distributional_semantics,20
+Text Representation,20
+Word Representation,20
+TF-IDF,20
+Bag-of-Words,20
+text_encoding,20
+feature_extraction,20
+Distributional Semantics,20
+word_embedding,20
+semantic_similarity,20
+Simulated Annealing,8
+Local Search,8
+Metropolis Algorithm,8
+Cooling Schedule,8
+Hill Climbing,8
+metaheuristic,8
+probabilistic_algorithm,8
+search,8
+Monte Carlo Algorithm,17
+Las Vegas Algorithm,17
+randomized_algorithm,17
+probabilistic,17
+algorithm_design,17
+Pseudocode,1
+Flowchart,1
+Algorithm,1
+Code,1
+Pseudocode Syntax,1
+algorithm,1
+documentation,1
+programming,1
+Continual Learning,14
+Catastrophic Forgetting,14
+Elastic Weight Consolidation (EWC),14
+Replay Buffer,14
+Online Learning,14
+Transfer Learning,14
+Meta-Learning,14
+machine_learning,5
+lifelong_learning,14
+online_learning,14
+catastrophic_forgetting,14
+adaptive_models,14
+Random Forest,2
+Bagging,2
+Ensemble Learning,2
+Feature Importance,2
+Out-of-Bag Error,2
+"machine_learning,",10
+Adaptive Random Forest (ARF),14
+Drift Detection Method (DDM),14
+Hoeffding Tree,14
+Streaming Data,14
+stream_learning,14
+ensemble_learning,2
+concept_drift,14
+Ensembles,2
+model_combination,2
+Naive Bayes,10
+Bayes’ Theorem,10
+Conditional Probability,10
+Multinomial Naive Bayes,10
+Gaussian Naive Bayes,10
+Bernoulli Naive Bayes,10
+CART (Classification and Regression Trees),2
+Gini Impurity,2
+Entropy,2
+Pruning,2
+tree_model,2
+interpretable_model,2
+k-Nearest Neighbors (k-NN),6
+Distance Metrics,6
+Lazy Learning,6
+Decision Boundary,6
+Curse of Dimensionality,6
+Weighted kNN,6
+instance_based_learning,6
+non_parametric,6
+Adaptive Machine Learning (Adaptive ML),14
+Incremental Learning,14
+Reinforcement Learning,17
+real_time_learning,14
+adaptive_systems,14
+Explainable AI (XAI),16
+Interpretability,16
+Transparency,16
+Post-hoc explanations,16
+Ante-hoc (intrinsic) interpretable models,16
+Saliency mapping,16
+Counterfactual explanations,16
+interpretability,16
+transparency,16
+model_explainability,16
+trustworthy_AI,16
+auditing,16
+Bootstrap Aggregating (Bagging),2
+Bootstrap Sampling,2
+Variance,2
+bagging,2
+bootstrap,2
+variance_reduction,2
+Boosting,2
+Stacking,2
+Voting Classifier,2
+Bootstrap Aggregating,2
+ensemble_methods,2
+boosting,2
+Tournament Selection,7
+Fitness Function,7
+Lexicase Selection,7
+Roulette Wheel Selection,7
+Rank Selection,7
+Elitism,7
+evolutionary_algorithm,7
+selection_method,7
+genetic_algorithm,7
+genetic_programming,7
+fitness_based_selection,7
+Parsimony Pressure,7
+Bloat,7
+Regularization,5
+Minimum Description Length (MDL),7
+Introns,7
+bloat_control,7
+model_complexity,7
+Genetic Drift,7
+Code Growth,7
+overfitting,5
+Underfitting,5
+Generalization,5
+Bias-Variance Trade-off,5
+Model Complexity,5
+model_evaluation,5
+bias,5
+generalization,5
+training_error,5
+bias_variance,5
+machine_learning model_evaluation,5
+underfitting,5
+Test Error,5
+generalization_error,5
+Mutation,7
+Crossover,7
+Selection,7
+Exploration vs. Exploitation,7
+variation_operator,7
+diversity,7
+Mutation Selection,7
+Subtree Crossover,7
+Uniform Crossover,7
+One-point Crossover,7
+recombination,7
+Fitness-Proportionate Selection,7
+ε-Lexicase Selection,7
+Down-Sampled Lexicase Selection,7
+Pareto Selection,7
+parent_selection,7
+non_aggregate_selection,7
+diversity_maintenance,7
+Genetic Algorithm (GA),7
+Genetic Programming (GP),7
+Objective Function,7
+Cost Function,7
+Selection Methods (e.g.,7
+Roulette Wheel),7
+objective_function,7
+Expression Tree,16
+Abstract Syntax Tree,16
+data_structure,16
+symbolic_regression,16
+compilers,16
+AST,16
+expression_parsing,16
+Monte Carlo Tree Search (MCTS),17
+Heuristic Search,17
+UCT,17
+Game Theory,17
+search_algorithm,17
+heuristic_search,17
+game_ai,17
+tree_search,17
+Bayesian Symbolic Regression,16
+Posterior Sampling,16
+MCMC,16
+SMC,16
+Bayesian_methods,16
+probabilistic_modeling,16
+uncertainty_quantification,16
+Service‑oriented Computing (SOC),13
+Microservices,13
+Enterprise Service Bus (ESB),13
+Service Registry,13
+Web Services,13
+software_architecture,13
+services,13
+SOA,13
+integration,13
+Implicit Graphs,8
+Graph Search,8
+BFS,8
+DFS,8
+State‐Space Graphs,8
+graph,8
+implicit_representation,8
+state_space,8
+Depth First Search (DFS),8
+Connected Components,8
+Backtracking,8
+graph_search,8
+depth_first,8
+traversal,8
+stack,8
+recursive,8
+Breadth First Search (BFS),8
+Depth First Search,8
+Queue,8
+breadth_first,8
+shortest_path,8
+Graph Connectivity,9
+Connected Component,9
+Vertex Cut,9
+Edge Cut,9
+k‑connected Graph,9
+graph_theory,9
+connectivity,9
+resilience,9
+network,9
+Greedy Search (Greedy Algorithm),1
+Dynamic Programming,1
+Fractional Knapsack,1
+Dijkstra’s Algorithm,1
+heuristic,1
+greedy,1
+Traveling Salesman Problem (TSP),8
+Hamiltonian Cycle,8
+NP-hard Problems,8
+Approximation Algorithms,8
+Heuristics,8
+Knapsack Problem,8
+NP-hard,8
+combinatorial_optimization,8
+benchmark_problem,8
+Breadth First Search,8
+Shortest Path,8
+Connectivity,8
+Tabu Search,8
+local_search,8
+GloVe,20
+Contextual Embeddings,20
+Distributional Hypothesis,20
+Representation Learning,20
+Vector Semantics,20
+NLP,11
+Softmax Function,10
+Cross-Entropy,10
+Logits,10
+Multinomial Logistic Regression,10
+Probability,10
+Neural Networks,10
+Causal Mask,11
+Self-Attention,11
+Transformer,11
+Masked Language Modeling,11
+GPT,11
+Attention Mechanism,11
+Autoregressive,11
+Language Modeling,11
+Sequence-to-Sequence Model,11
+Encoder,11
+Decoder,11
+Neural Machine Translation,11
+Context Vector,11
+Encoder–Decoder,11
+Translation,11
+Summarization,11
+Speech-to-Text,11
+Recurrent Neural Network (RNN),11
+Backpropagation Through Time,11
+Sequence-to-Sequence,11
+Recurrent Architectures,11
+Sequence Modeling,11
+Time Series,11
+Speech,11
+Text,11
+BLEU (Bilingual Evaluation Understudy),12
+ROUGE,12
+METEOR,12
+SacreBLEU,12
+N‑gram Overlap,12
+Evaluation Metric,12
+Machine Translation,12
+WMT Translation Task,12
+BLEU,12
+Human Evaluation,12
+Multilingual MT,12
+Shared Task,12
+Evaluation,12
+NLP Benchmark,12
+Random Forests,2
+Model Aggregation,2
+Robustness,2
+NLP Methods,2
+Constituency Parsing,11
+Dependency Parsing,11
+CFG,11
+PCFG,11
+CKY Algorithm,11
+Syntax,11
+Parsing,11
+Tree-Structure,11
+Hidden State,11
+Encoder Hidden States,11
+Attention Weights / Alignment Scores,11
+Decoder Hidden State,11
+Attention Mechanism (Bahdanau,11
+Luong),11
+Fixed-Length Representation,11
+Attention,11
+Seq2Seq,11
+Encoders,11
+Recurrence,11
+Polynomial Time,11
+Sequential Modeling,11
+Time-Series,11
+Convolutions,11
+Local Patterns,11
+Multi-Head Attention,11
+Positional Encoding,11
+BERT,11
+Parallelism,11
+Multi-head Attention,11
+neural network,11
+transformer,11
+Milti-head Attention,11

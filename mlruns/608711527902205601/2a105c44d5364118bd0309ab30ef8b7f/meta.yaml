@@ -1,0 +1,15 @@
+artifact_uri: file:///mnt/c/Users/ircal/OneDrive/AIML/aiml-glossary/mlruns/608711527902205601/2a105c44d5364118bd0309ab30ef8b7f/artifacts
+end_time: 1764730352823
+entry_point_name: ''
+experiment_id: '608711527902205601'
+lifecycle_stage: active
+run_id: 2a105c44d5364118bd0309ab30ef8b7f
+run_name: semantic-clustering-local
+run_uuid: 2a105c44d5364118bd0309ab30ef8b7f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1764730351685
+status: 3
+tags: []
+user_id: ian
