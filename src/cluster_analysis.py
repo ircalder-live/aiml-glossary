@@ -16,13 +16,13 @@ def build_graph(glossary_file="data/aiml_glossary.json",
 
     G = nx.Graph()
 
-    # Add nodes for each term
+    # Add nodes for each term in glossary
     for entry in glossary:
         term = entry.get("term")
         if term:
             G.add_node(term)
 
-    # Add edges for related terms
+    # Add edges for related terms from glossary
     for entry in glossary:
         term = entry.get("term")
         if not term:
@@ -34,6 +34,14 @@ def build_graph(glossary_file="data/aiml_glossary.json",
                 rel_term = str(rel).strip()
             if rel_term and rel_term in G.nodes:
                 G.add_edge(term, rel_term)
+
+    # Add edges from link dictionary (explicit links)
+    for src, targets in link_dict.items():
+        if src not in G.nodes:
+            continue
+        for dst in targets:
+            if dst in G.nodes:
+                G.add_edge(src, dst)
 
     return G
 
