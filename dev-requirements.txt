@@ -9,6 +9,7 @@ flake8==7.1.1   # Added to support make lint in CI
 
 # Coverage reporting
 coverage==7.6.1
+pytest-cov==5.0.0   # Added to enable pytest --cov options
 
 # Optional: pre-commit hooks for consistent formatting
 pre-commit==4.0.1
@@ -19,6 +20,7 @@ pre-commit==4.0.1
 # ruff: fast linter used in your Makefile (make lint).
 # flake8: required by CI workflow (make lint).
 # coverage: optional, but useful if you want to measure test coverage.
+# pytest-cov: pytest plugin to integrate coverage reporting (needed for make coverage).
 # pre-commit: optional, lets you enforce linting/formatting before commits.
 # Usage: Install dev dependencies separately from runtime.
 # $ pip install -r dev-requirements.txt
