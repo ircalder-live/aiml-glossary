@@ -33,7 +33,7 @@ dev-install:
 
 # Run linting
 lint:
-	$(PYTHON) -m flake8 src/ data/
+	$(PYTHON) -m ruff check src/ data/
 
 # Run tests
 test:
