@@ -5,6 +5,7 @@ pytest==8.3.3
 
 # Linting and style checks
 ruff==0.6.9
+flake8==7.1.1   # Added to support make lint in CI
 
 # Coverage reporting
 coverage==7.6.1
@@ -16,6 +17,7 @@ pre-commit==4.0.1
 # Notes:
 # pytest: runs your unit tests (make test).
 # ruff: fast linter used in your Makefile (make lint).
+# flake8: required by CI workflow (make lint).
 # coverage: optional, but useful if you want to measure test coverage.
 # pre-commit: optional, lets you enforce linting/formatting before commits.
 # Usage: Install dev dependencies separately from runtime.
