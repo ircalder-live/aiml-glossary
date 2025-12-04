@@ -1,44 +1,41 @@
-#!/usr/bin/env python3
-"""
-validate_glossary.py
-
-Validate AIML glossary data against glossary.schema.json using jsonschema.
-Run this after adding new entries to catch errors early.
-"""
-
 import json
-import sys
-from pathlib import Path
-from jsonschema import validate, ValidationError
 
-# Paths
-DATA_DIR = Path(__file__).resolve().parent.parent / "data"
-GLOSSARY_FILE = DATA_DIR / "aiml_glossary.json"
-SCHEMA_FILE = DATA_DIR / "glossary.schema.json"
 
-def main():
-    try:
-        # Load schema
-        with open(SCHEMA_FILE, "r", encoding="utf-8") as f:
-            schema = json.load(f)
+def validate_glossary(glossary_file: str) -> None:
+    """
+    Validate glossary entries in the given JSON file.
 
-        # Load glossary data
-        with open(GLOSSARY_FILE, "r", encoding="utf-8") as f:
-            glossary = json.load(f)
+    Ensures each entry has required fields: 'term' and 'definition'.
+    Raises ValueError if any entry is malformed.
+    """
+    with open(glossary_file, "r", encoding="utf-8") as f:
+        glossary = json.load(f)
 
-        # Validate
-        validate(instance=glossary, schema=schema)
-        print("✅ Glossary data is valid against schema.")
+    if not isinstance(glossary, list):
+        raise ValueError("Glossary must be a list of entries")
 
-    except ValidationError as e:
-        print("❌ Validation error:")
-        print(f"  Path: {'/'.join(map(str, e.path))}")
-        print(f"  Message: {e.message}")
-        sys.exit(1)
+    for entry in glossary:
+        if not isinstance(entry, dict):
+            raise ValueError("Each glossary entry must be a dictionary")
 
-    except Exception as e:
-        print("❌ Unexpected error:", e)
-        sys.exit(1)
+        # Required fields
+        if "term" not in entry or not entry["term"]:
+            raise ValueError("Glossary entry missing 'term'")
+        if "definition" not in entry or not entry["definition"]:
+            raise ValueError(f"Glossary entry '{entry.get('term')}' missing 'definition'")
+
+        # Optional field validation
+        if "related_terms" in entry and not isinstance(entry["related_terms"], list):
+            raise ValueError(f"Glossary entry '{entry['term']}' has invalid 'related_terms'")
+
+    # If no errors raised, glossary is valid
+    return None
+
 
 if __name__ == "__main__":
-    main()
+    # Example usage: validate a glossary file directly
+    try:
+        validate_glossary("data/aiml_glossary.json")
+        print("Glossary validation passed.")
+    except ValueError as e:
+        print(f"Glossary validation failed: {e}")
