@@ -1,19 +1,31 @@
 # src/cluster_terms.py
-import subprocess
 
-def run_script(script):
-    print(f"Running {script}...")
+import subprocess
+from pathlib import Path
+
+# Import sibling modules directly (no "src." prefix)
+from cluster_analysis import run_clustering
+from semantic_clustering import run_semantic_clustering
+
+
+def run_script(script: str):
+    """Helper to run another script in src/ via subprocess."""
     subprocess.run(["python3", f"src/{script}"], check=True)
+
 
 def main():
     # Run graph clustering
-    run_script("cluster_analysis.py")
+    print("Running cluster_analysis.py...")
+    run_clustering("data/aiml_glossary.json", "data/link_dictionary.json")
+
     # Run semantic clustering
-    run_script("semantic_clustering.py")
-    # Run combined clustering + ARI comparison
-    run_script("clustering.py")
-    # Run evaluation/dashboard
+    print("Running semantic_clustering.py...")
+    run_semantic_clustering("data/aiml_glossary.json")
+
+    # Evaluate clusters
+    print("Running evaluate_clusters.py...")
     run_script("evaluate_clusters.py")
+
 
 if __name__ == "__main__":
     main()
