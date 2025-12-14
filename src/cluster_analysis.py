@@ -1,14 +1,39 @@
-import os
+# src/cluster_analysis.py
+
 import json
-import pandas as pd
+from pathlib import Path
 import networkx as nx
 import matplotlib.pyplot as plt
 import mlflow
-import community  # python-louvain
+import os
 
-def build_graph(glossary_file="data/aiml_glossary.json",
-                link_dict_file="data/link_dictionary.json"):
-    """Construct a NetworkX graph from glossary entries and link dictionary."""
+# Force MLflow to use a local directory inside the repo (safe for CI/CD)
+mlflow.set_tracking_uri("file://" + os.path.join(os.getcwd(), "experiments/mlruns"))
+
+try:
+    import community as community_louvain
+except ImportError:
+    community_louvain = None
+
+# Resolve repo root (two levels up from this file)
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
+
+def build_graph(glossary_file: Path, link_dict_file: Path):
+    """
+    Build a glossary graph from JSON glossary and link dictionary.
+    """
+    glossary_file = Path(glossary_file)
+    link_dict_file = Path(link_dict_file)
+
+    print("DEBUG: Looking for glossary_file at", glossary_file.resolve())
+    print("DEBUG: Looking for link_dict_file at", link_dict_file.resolve())
+
+    if not glossary_file.exists():
+        raise FileNotFoundError(f"Glossary file not found: {glossary_file}")
+    if not link_dict_file.exists():
+        raise FileNotFoundError(f"Link dictionary file not found: {link_dict_file}")
+
     with open(glossary_file, "r", encoding="utf-8") as f:
         glossary = json.load(f)
     with open(link_dict_file, "r", encoding="utf-8") as f:
@@ -16,83 +41,64 @@ def build_graph(glossary_file="data/aiml_glossary.json",
 
     G = nx.Graph()
 
-    # Add nodes for each term in glossary
+    # Add nodes
     for entry in glossary:
         term = entry.get("term")
         if term:
             G.add_node(term)
 
-    # Add edges for related terms from glossary
-    for entry in glossary:
-        term = entry.get("term")
-        if not term:
-            continue
-        for rel in entry.get("related_terms", []):
-            if isinstance(rel, dict):
-                rel_term = rel.get("label")
-            else:
-                rel_term = str(rel).strip()
-            if rel_term and rel_term in G.nodes:
-                G.add_edge(term, rel_term)
+    # Add edges
+    for term, anchor in link_dict.items():
+        if term in G and anchor in G:
+            G.add_edge(term, anchor)
 
-    # Add edges from link dictionary (explicit links)
-    for src, targets in link_dict.items():
-        if src not in G.nodes:
-            continue
-        for dst in targets:
-            if dst in G.nodes:
-                G.add_edge(src, dst)
-
+    print(f"DEBUG: Graph built with {G.number_of_nodes()} nodes and {G.number_of_edges()} edges")
     return G
 
-def run_clustering(glossary_file="data/aiml_glossary.json",
-                   link_dict_file="data/link_dictionary.json"):
+
+def run_graph_clustering(
+    glossary_file: Path = REPO_ROOT / "data" / "aiml_glossary.json",
+    link_dict_file: Path = REPO_ROOT / "data" / "link_dictionary.json",
+    output_dir: Path = REPO_ROOT / "output",
+    vis_dir: Path = REPO_ROOT / "visualizations"
+):
+    """
+    Run Louvain clustering on glossary graph, save outputs, visualize, and log with MLflow.
+    """
+    glossary_file = Path(glossary_file)
+    link_dict_file = Path(link_dict_file)
+    output_dir = Path(output_dir)
+    vis_dir = Path(vis_dir)
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    vis_dir.mkdir(parents=True, exist_ok=True)
+
     G = build_graph(glossary_file, link_dict_file)
 
     num_terms = G.number_of_nodes()
     num_links = G.number_of_edges()
-    avg_degree = sum(dict(G.degree()).values()) / num_terms if num_terms > 0 else 0
 
-    # Louvain partition
-    partition = community.best_partition(G)
+    partition = {}
+    if community_louvain:
+        partition = community_louvain.best_partition(G)
+        print(f"DEBUG: Louvain clustering produced {len(set(partition.values()))} clusters")
+    else:
+        print("WARNING: community_louvain not installed, skipping clustering")
 
-    num_clusters = len(set(partition.values()))
-    largest_cluster_size = max(pd.Series(list(partition.values())).value_counts())
-    modularity = community.modularity(partition, G)
-
-    # Save cluster assignments
-    os.makedirs("output", exist_ok=True)
-    cluster_df = pd.DataFrame(list(partition.items()), columns=["term", "cluster_id"])
-    cluster_df.to_csv("output/cluster_assignments.csv", index=False)
+    # Save graph stats (including partition if available)
+    graph_df = {
+        "num_terms": num_terms,
+        "num_links": num_links,
+        "num_clusters": len(set(partition.values())) if partition else 0,
+        "partition": partition
+    }
+    stats_file = output_dir / "graph_stats.json"
+    with open(stats_file, "w", encoding="utf-8") as f:
+        json.dump(graph_df, f, indent=2)
+    print(f"Graph stats written to {stats_file}")
 
     # Visualization
-    os.makedirs("visualizations", exist_ok=True)
     plt.figure(figsize=(8, 6))
     pos = nx.spring_layout(G, seed=42)
-    nx.draw_networkx_nodes(G, pos,
-                           node_color=[partition[n] for n in G.nodes],
-                           cmap=plt.cm.Set3)
-    nx.draw_networkx_edges(G, pos, alpha=0.3)
-    nx.draw_networkx_labels(G, pos, font_size=8)
-    plt.title("Glossary Clusters (Louvain)")
-    plt.tight_layout()
-    plt.savefig("visualizations/glossary_clusters.png")
-
-    # MLflow logging
-    with mlflow.start_run(run_name="Glossary Clustering Experiment"):
-        mlflow.log_param("num_terms", num_terms)
-        mlflow.log_param("num_links", num_links)
-        mlflow.log_metric("avg_degree", avg_degree)
-        mlflow.log_metric("num_clusters", num_clusters)
-        mlflow.log_metric("largest_cluster_size", largest_cluster_size)
-        mlflow.log_metric("modularity", modularity)
-
-        mlflow.log_artifact(glossary_file)
-        mlflow.log_artifact(link_dict_file)
-        mlflow.log_artifact("output/cluster_assignments.csv")
-        mlflow.log_artifact("visualizations/glossary_clusters.png")
-
-    print(f"Clustering complete: {num_clusters} clusters, modularity={modularity:.3f}")
-
-if __name__ == "__main__":
-    run_clustering()
+    nx.draw(G, pos, node_size=50, with_labels=False)
+    vis_file = vis_dir

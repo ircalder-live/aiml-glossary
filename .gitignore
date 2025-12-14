@@ -21,6 +21,17 @@ visualizations/
 .coverage
 htmlcov/
 
+# Ignore local MLflow runs
+experiments/mlruns/
+
 # Ignore OS-specific files
 .DS_Store
 Thumbs.db
+
+# Ignore transient data
+mlruns/
+.ipynb_checkpoints/
+*.log
+
+# Ignore Jupyter notebook metadata
+*.ipynb_checkpoints
