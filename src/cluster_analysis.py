@@ -101,4 +101,5 @@ def run_graph_clustering(
     plt.figure(figsize=(8, 6))
     pos = nx.spring_layout(G, seed=42)
     nx.draw(G, pos, node_size=50, with_labels=False)
-    vis_file = vis_dir
+    vis_file = vis_dir / "graph_clusters.png"
+    plt.savefig(vis_file, dpi=150)
