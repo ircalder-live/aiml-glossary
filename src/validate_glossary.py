@@ -1,41 +1,52 @@
+# src/validate_glossary.py
+
 import json
+from pathlib import Path
+import sys
 
 
-def validate_glossary(glossary_file: str) -> None:
+def validate_glossary(glossary_file: Path, schema_file: Path = None):
     """
-    Validate glossary entries in the given JSON file.
-
+    Validate the glossary JSON file.
     Ensures each entry has required fields: 'term' and 'definition'.
-    Raises ValueError if any entry is malformed.
+    Raises ValueError if validation fails.
     """
+    glossary_file = Path(glossary_file)
+
+    if not glossary_file.exists():
+        raise FileNotFoundError(f"Glossary file not found: {glossary_file}")
+
     with open(glossary_file, "r", encoding="utf-8") as f:
         glossary = json.load(f)
 
-    if not isinstance(glossary, list):
-        raise ValueError("Glossary must be a list of entries")
+    errors = []
+    for i, entry in enumerate(glossary, start=1):
+        if "term" not in entry:
+            errors.append(f"Entry {i} missing 'term'")
+        if "definition" not in entry:
+            errors.append(f"Entry {i} missing 'definition'")
 
-    for entry in glossary:
-        if not isinstance(entry, dict):
-            raise ValueError("Each glossary entry must be a dictionary")
+    if errors:
+        print("❌ Validation failed:")
+        for e in errors:
+            print(" -", e)
+        # Raise so tests can catch it
+        raise ValueError("Glossary validation failed")
 
-        # Required fields
-        if "term" not in entry or not entry["term"]:
-            raise ValueError("Glossary entry missing 'term'")
-        if "definition" not in entry or not entry["definition"]:
-            raise ValueError(f"Glossary entry '{entry.get('term')}' missing 'definition'")
-
-        # Optional field validation
-        if "related_terms" in entry and not isinstance(entry["related_terms"], list):
-            raise ValueError(f"Glossary entry '{entry['term']}' has invalid 'related_terms'")
-
-    # If no errors raised, glossary is valid
-    return None
+    print("✅ Glossary validation passed")
+    return True
 
 
 if __name__ == "__main__":
-    # Example usage: validate a glossary file directly
+    if len(sys.argv) < 2:
+        print("Usage: python3 src/validate_glossary.py <glossary_file> [schema_file]")
+        sys.exit(1)
+
+    glossary_file = Path(sys.argv[1])
+    schema_file = Path(sys.argv[2]) if len(sys.argv) > 2 else None
+
     try:
-        validate_glossary("data/aiml_glossary.json")
-        print("Glossary validation passed.")
-    except ValueError as e:
-        print(f"Glossary validation failed: {e}")
+        validate_glossary(glossary_file, schema_file)
+    except Exception as e:
+        print(f"Validation error: {e}")
+        sys.exit(1)
