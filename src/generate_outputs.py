@@ -1,7 +1,7 @@
 # src/generate_outputs.py
 
 from pathlib import Path
-from src.link_dictionary import update_link_dictionary
+from link_dictionary import update_link_dictionary
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
