@@ -9,18 +9,6 @@ from src.utils import load_glossary, resolve_uri
 def build_graph(glossary_file: str, link_dict_file: str) -> nx.Graph:
     """
     Build a graph from glossary and link_dict JSON files.
-
-    Parameters
-    ----------
-    glossary_file : str
-        URI or path to glossary JSON file.
-    link_dict_file : str
-        URI or path to link dictionary JSON file.
-
-    Returns
-    -------
-    nx.Graph
-        Graph with terms as nodes and related terms as edges.
     """
     # load_glossary returns a dict {term: definition}
     glossary = load_glossary(glossary_file)
@@ -89,19 +77,21 @@ def run_clustering(
     return G
 
 
-def visualize_clusters(
-    G: nx.Graph, output_path: str = "visualizations/glossary_clusters.png"
-):
+def run_semantic_clustering(
+    glossary_file: str,
+    embeddings_file: str,
+    assignments_path: str = "output/semantic_cluster_assignments.csv",
+    stats_path: str = "output/semantic_graph_stats.json",
+    viz_path: str = "visualizations/semantic_clusters.png",
+) -> nx.Graph:
     """
-    Save a visualization of the glossary graph to a PNG file.
+    Perform semantic clustering using embeddings and save assignments, stats, and visualization.
     """
     import os
-    import matplotlib.pyplot as plt
 
-    os.makedirs(Path(output_path).parent, exist_ok=True)
+    # Ensure directories exist
+    os.makedirs(Path(assignments_path).parent, exist_ok=True)
+    os.makedirs(Path(stats_path).parent, exist_ok=True)
+    os.makedirs(Path(viz_path).parent, exist_ok=True)
 
-    plt.figure(figsize=(8, 6))
-    pos = nx.spring_layout(G, seed=42)
-    nx.draw(G, pos, with_labels=True, node_color="lightblue", edge_color="gray")
-    plt.savefig(output_path, bbox_inches="tight")
-    plt.close()
+    # Load glossary and embeddings
