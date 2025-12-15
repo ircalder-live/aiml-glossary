@@ -1,37 +1,41 @@
-# Ignore Python virtual environments
+# Python virtual environments
 .venv/
 venv/
 
-# Ignore Python cache and compiled files
+# Python cache and compiled files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Ignore build and distribution directories
+# Build and distribution directories
 build/
 dist/
 *.egg-info/
 
-# Ignore generated outputs
+# Generated outputs
 output/
 visualizations/
 
-# Ignore coverage and test artifacts
+# Coverage and test artifacts
 .coverage
 htmlcov/
 
-# Ignore local MLflow runs
+# MLflow experiment tracking (local runs and experiments)
+mlruns/
 experiments/mlruns/
 
-# Ignore OS-specific files
+# OS-specific files
 .DS_Store
 Thumbs.db
 
-# Ignore transient data
-mlruns/
-.ipynb_checkpoints/
+# Transient and log files
 *.log
 
-# Ignore Jupyter notebook metadata
-*.ipynb_checkpoints
+# Jupyter notebook checkpoints and metadata
+.ipynb_checkpoints/
+
+# Editor and IDE files
+*.code-workspace
+.vscode/
+.idea/
