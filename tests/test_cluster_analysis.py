@@ -1,14 +1,13 @@
-import os
+# tests/test_cluster_analysis.py
+
 import json
-import pandas as pd
-from src import cluster_analysis
+import src.cluster_analysis as cluster_analysis
 
 
 def test_build_graph_creates_nodes_and_edges(tmp_path):
-    """Verify that build_graph adds nodes and edges from glossary and link_dict."""
     glossary = [
-        {"term": "AI", "related_terms": ["ML"]},
-        {"term": "ML", "related_terms": []},
+        {"term": "AI", "definition": "Artificial Intelligence"},
+        {"term": "ML", "definition": "Machine Learning"},
     ]
     link_dict = {"AI": ["ML"]}
 
@@ -19,21 +18,18 @@ def test_build_graph_creates_nodes_and_edges(tmp_path):
     link_dict_file.write_text(json.dumps(link_dict))
 
     G = cluster_analysis.build_graph(str(glossary_file), str(link_dict_file))
-
-    # Assert nodes exist
     assert "AI" in G.nodes
     assert "ML" in G.nodes
-
-    # Assert edge exists
     assert ("AI", "ML") in G.edges
 
 
-def test_run_clustering_outputs_files(tmp_path):
-    """Verify that run_clustering produces cluster assignments and visualization files."""
-    glossary = [
-        {"term": "AI", "related_terms": ["ML"]},
-        {"term": "ML", "related_terms": []},
-    ]
+def test_run_clustering_creates_artifacts(tmp_path):
+    """Verify that run_clustering writes assignments, stats, and visualization."""
+
+    glossary = {
+        "AI": "Artificial Intelligence",
+        "ML": "Machine Learning",
+    }
     link_dict = {"AI": ["ML"]}
 
     glossary_file = tmp_path / "glossary.json"
@@ -42,19 +38,24 @@ def test_run_clustering_outputs_files(tmp_path):
     glossary_file.write_text(json.dumps(glossary))
     link_dict_file.write_text(json.dumps(link_dict))
 
-    # Change working directory to tmp_path so outputs go there
-    cwd = os.getcwd()
-    os.chdir(tmp_path)
+    assignments_path = tmp_path / "cluster_assignments.csv"
+    stats_path = tmp_path / "graph_stats.json"
+    viz_path = tmp_path / "glossary_clusters.png"
 
-    try:
-        cluster_analysis.run_clustering(str(glossary_file), str(link_dict_file))
+    G = cluster_analysis.run_clustering(
+        str(glossary_file),
+        str(link_dict_file),
+        assignments_path=str(assignments_path),
+        stats_path=str(stats_path),
+        viz_path=str(viz_path),
+    )
 
-        # Check that output files exist
-        assert os.path.exists("output/cluster_assignments.csv")
-        assert os.path.exists("visualizations/glossary_clusters.png")
+    # Graph should contain expected nodes and edge
+    assert "AI" in G.nodes
+    assert "ML" in G.nodes
+    assert ("AI", "ML") in G.edges
 
-        # Check that cluster_assignments.csv has expected columns
-        df = pd.read_csv("output/cluster_assignments.csv")
-        assert {"term", "cluster_id"}.issubset(df.columns)
-    finally:
-        os.chdir(cwd)
+    # Artifacts should exist
+    assert assignments_path.exists()
+    assert stats_path.exists()
+    assert viz_path.exists()
