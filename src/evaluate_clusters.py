@@ -1,61 +1,82 @@
 # src/evaluate_clusters.py
+"""
+Evaluate clustering results by comparing graph-based and semantic assignments.
+Computes metrics like Adjusted Rand Index (ARI) and saves results to output.
+"""
 
-import pandas as pd
 import json
-import mlflow
-import os
-from pathlib import Path
-
-# Force MLflow to use a local directory inside the repo (safe for CI/CD and tests)
-mlflow.set_tracking_uri("file://" + os.path.join(os.getcwd(), "experiments/mlruns"))
-mlflow.set_experiment("cluster_evaluation")
-
-REPO_ROOT = Path(__file__).resolve().parent.parent
+from sklearn.metrics import adjusted_rand_score
+from src.utils import resolve_uri, load_glossary
 
 
-def load_assignments(graph_csv: Path, semantic_csv: Path):
-    """Load cluster assignment CSVs into DataFrames."""
-    graph_df = pd.read_csv(graph_csv)
-    semantic_df = pd.read_csv(semantic_csv)
-    return graph_df, semantic_df
+def evaluate_clusters(glossary_json: str = "data:aiml_glossary.json") -> dict:
+    """
+    Evaluate clustering results using URIs for input/output.
+    Optionally loads glossary via load_glossary() to ensure consistent normalization.
+    """
+    # Ensure glossary loads cleanly (normalization handled by load_glossary)
+    glossary_dict = load_glossary(glossary_json)
+    if not glossary_dict:
+        raise ValueError("Glossary is empty or invalid.")
 
+    graph_assignments_file = resolve_uri("output:cluster_assignments.csv")
+    semantic_assignments_file = resolve_uri("output:semantic_cluster_assignments.csv")
 
-def evaluate():
-    """Compare graph and semantic cluster assignments, log artifacts and results."""
-    graph_csv = REPO_ROOT / "output" / "cluster_assignments.csv"
-    semantic_csv = REPO_ROOT / "output" / "semantic_clusters.csv"
+    if not graph_assignments_file.exists():
+        raise FileNotFoundError(
+            f"Graph assignments file not found: {graph_assignments_file}"
+        )
+    if not semantic_assignments_file.exists():
+        raise FileNotFoundError(
+            f"Semantic assignments file not found: {semantic_assignments_file}"
+        )
 
-    if not graph_csv.exists() or not semantic_csv.exists():
-        raise FileNotFoundError("Cluster assignment CSVs not found")
+    # Load assignments
+    graph_assignments = {}
+    with open(graph_assignments_file, "r", encoding="utf-8") as f:
+        next(f)  # skip header
+        for line in f:
+            term, cluster = line.strip().split(",")
+            graph_assignments[term] = int(cluster)
 
-    graph_df, semantic_df = load_assignments(graph_csv, semantic_csv)
+    semantic_assignments = {}
+    with open(semantic_assignments_file, "r", encoding="utf-8") as f:
+        next(f)  # skip header
+        for line in f:
+            term, cluster = line.strip().split(",")
+            semantic_assignments[term] = int(cluster)
 
-    # --- Simple evaluation logic ---
-    # Align on terms
-    merged = pd.merge(graph_df, semantic_df, on="term", suffixes=("_graph", "_semantic"))
-    total_terms = len(merged)
-    agreement = (merged["cluster_id_graph"] == merged["cluster_id_semantic"]).sum()
-    agreement_ratio = agreement / total_terms if total_terms > 0 else 0.0
+    # Align terms (only those present in both assignments and glossary)
+    common_terms = (
+        set(graph_assignments.keys())
+        & set(semantic_assignments.keys())
+        & set(glossary_dict.keys())
+    )
+    graph_labels = [graph_assignments[t] for t in common_terms]
+    semantic_labels = [semantic_assignments[t] for t in common_terms]
 
-    results = {
-        "total_terms": total_terms,
-        "agreement_count": int(agreement),
-        "agreement_ratio": agreement_ratio,
+    # Compute ARI
+    ari = adjusted_rand_score(graph_labels, semantic_labels)
+
+    metrics = {
+        "num_terms_compared": len(common_terms),
+        "ari": ari,
     }
 
-    # Save results JSON
-    results_file = REPO_ROOT / "output" / "clustering_results.json"
-    with open(results_file, "w", encoding="utf-8") as f:
-        json.dump(results, f, indent=2)
-    print(f"Clustering results written to {results_file}")
+    # Save metrics
+    metrics_file = resolve_uri("output:ari_metrics.json")
+    with open(metrics_file, "w", encoding="utf-8") as f:
+        json.dump(metrics, f, indent=2)
 
-    # --- MLflow logging ---
-    with mlflow.start_run(run_name="cluster_evaluation"):
-        mlflow.log_artifact(str(graph_csv), artifact_path="clusters")
-        mlflow.log_artifact(str(semantic_csv), artifact_path="clusters")
-        mlflow.log_artifact(str(results_file), artifact_path="evaluation")
-        mlflow.log_metrics({"agreement_ratio": agreement_ratio})
+    print(f"ARI metrics written to {metrics_file}")
+    return metrics
+
+
+def main() -> None:
+    metrics = evaluate_clusters()
+    print("Cluster Evaluation Summary:")
+    print(metrics)
 
 
 if __name__ == "__main__":
-    evaluate()
+    main()

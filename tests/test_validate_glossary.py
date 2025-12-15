@@ -18,9 +18,7 @@ def test_validate_glossary_valid_entry(tmp_path):
 def test_validate_glossary_malformed_entry(tmp_path):
     """Ensure malformed glossary entries raise a ValueError."""
     # Missing 'definition' field
-    malformed_glossary = [
-        {"term": "AI", "related_terms": ["ML"]}
-    ]
+    malformed_glossary = [{"term": "AI", "related_terms": ["ML"]}]
     glossary_file = tmp_path / "bad_glossary.json"
     glossary_file.write_text(json.dumps(malformed_glossary))
 

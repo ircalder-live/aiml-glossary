@@ -1,77 +1,43 @@
 # src/link_dictionary.py
+"""
+Build a link dictionary for glossary terms.
+Links are inferred by simple co-occurrence heuristics (e.g., term mentions in definitions).
+Saves dictionary to output artifacts.
+"""
 
-from pathlib import Path
 import json
-import re
+from src.utils import resolve_uri, load_glossary
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
 
-# Simple synonym map: maps lowercase variants to canonical glossary terms
-SYNONYM_MAP = {
-    "neural nets": "Neural Network",
-    "nn": "Neural Network",
-    "ml": "Machine Learning",
-    "ai": "Artificial Intelligence",
-    "dl": "Deep Learning",
-    # Add more as needed
-}
+def build_link_dictionary(glossary_json: str) -> None:
+    """Build link dictionary using URIs for input/output."""
+    glossary_dict = load_glossary(glossary_json)
 
-def simple_stem(word: str) -> str:
-    """Lightweight stemmer: strips common suffixes."""
-    return re.sub(r'(ing|ed|es|s)$', '', word.lower())
+    terms = list(glossary_dict.keys())
+    link_dict = {term: [] for term in terms}
 
-def tokenize(text: str):
-    """Split text into alphanumeric tokens."""
-    return re.findall(r'\b\w+\b', text.lower())
+    # Simple heuristic: if a term appears in another term's definition, link them
+    for term, definition in glossary_dict.items():
+        for other in terms:
+            if other != term and other.lower() in definition.lower():
+                link_dict[term].append(other)
 
-def update_link_dictionary(
-    glossary_file: Path = REPO_ROOT / "data" / "aiml_glossary.json",
-    link_dict_file: Path = REPO_ROOT / "data" / "link_dictionary.json"
-):
-    """
-    Build a link dictionary mapping each term to other terms mentioned in its definition.
-    Adds phrase matching for multi-word terms and synonym expansion.
-    Returns both the link_dict and the glossary entries.
-    """
-    glossary_file = Path(glossary_file)
-    link_dict_file = Path(link_dict_file)
-
-    if not glossary_file.exists():
-        raise FileNotFoundError(f"Glossary file not found: {glossary_file}")
-
-    with open(glossary_file, "r", encoding="utf-8") as f:
-        glossary = json.load(f)
-
-    terms = {entry["term"].strip() for entry in glossary if "term" in entry}
-    link_dict = {}
-
-    for entry in glossary:
-        term = entry.get("term", "").strip()
-        definition = entry.get("definition", "").lower()
-        links = []
-
-        # --- Phrase matching for multi-word terms ---
-        for candidate in terms:
-            candidate_lower = candidate.lower()
-            if candidate_lower in definition and candidate_lower != term.lower():
-                links.append(candidate)
-
-        # --- Synonym expansion ---
-        for synonym, canonical in SYNONYM_MAP.items():
-            if synonym in definition and canonical.lower() != term.lower():
-                links.append(canonical)
-
-        # --- Token-level matching with simple stemming ---
-        tokens = [simple_stem(tok) for tok in tokenize(definition)]
-        for candidate in terms:
-            stemmed = simple_stem(candidate)
-            if stemmed in tokens and candidate.lower() != term.lower():
-                links.append(candidate)
-
-        link_dict[term] = sorted(set(links))
-
+    # Save link dictionary
+    link_dict_file = resolve_uri("output:link_dictionary.json")
     with open(link_dict_file, "w", encoding="utf-8") as f:
         json.dump(link_dict, f, indent=2)
 
-    print(f"Link dictionary written to {link_dict_file} with {len(link_dict)} terms.")
-    return link_dict, glossary
+    print(f"Link dictionary written to {link_dict_file}")
+
+
+def main() -> None:
+    import sys
+
+    if len(sys.argv) != 2:
+        print("Usage: python3 -m src.link_dictionary <glossary_json>")
+        sys.exit(1)
+    build_link_dictionary(sys.argv[1])
+
+
+if __name__ == "__main__":
+    main()

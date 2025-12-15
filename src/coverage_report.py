@@ -1,44 +1,71 @@
 # src/coverage_report.py
+"""
+Generate a coverage report of expected artifacts.
+Checks whether each expected output/visualization file exists and saves a summary JSON.
+Also validates glossary presence and normalization via load_glossary().
+"""
 
-from pathlib import Path
 import json
+from src.utils import resolve_uri, load_glossary
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
 
-def report_link_coverage(glossary, link_dict, output_dir: Path = REPO_ROOT / "output"):
-    """
-    Generate a simple coverage report: how many glossary terms have links.
+EXPECTED_ARTIFACTS = [
+    "data:aiml_glossary.json",
+    "output:terms.csv",
+    "output:glossary_copy.json",
+    "output:link_dictionary.json",
+    "output:enriched_glossary.json",
+    "output:cluster_assignments.csv",
+    "output:semantic_cluster_assignments.csv",
+    "output:graph_stats.json",
+    "output:ari_metrics.json",
+    "output:coverage_report.json",  # report itself
+    "visualizations:glossary_clusters.png",
+    "visualizations:semantic_clusters.png",
+]
 
-    Parameters
-    ----------
-    glossary : list of dict
-        Enriched glossary entries.
-    link_dict : dict
-        Dictionary mapping terms to linked terms.
-    output_dir : Path
-        Directory to write coverage report.
-    """
-    total_terms = len(glossary)
 
-    # Count terms that have at least one link in the dictionary
-    covered_terms = sum(
-        1 for entry in glossary
-        if link_dict.get(entry.get("term", ""), [])
-    )
+def generate_report() -> dict:
+    """Generate coverage report using URIs for artifact paths and glossary normalization."""
+    report = {}
 
-    coverage = covered_terms / total_terms if total_terms else 0.0
+    # Validate glossary presence and normalization
+    try:
+        glossary_dict = load_glossary("data:aiml_glossary.json")
+        report["data:aiml_glossary.json"] = bool(glossary_dict)
+    except Exception as e:
+        report["data:aiml_glossary.json"] = f"Error: {e}"
 
-    report = {
-        "total_terms": total_terms,
-        "covered_terms": covered_terms,
-        "coverage_percent": round(coverage * 100, 2)
-    }
+    # Check other artifacts
+    for uri in EXPECTED_ARTIFACTS:
+        if uri == "data:aiml_glossary.json":
+            continue  # already checked above
+        path = resolve_uri(uri)
+        report[uri] = path.exists()
 
-    output_dir = Path(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
+    # Save report
+    report_file = resolve_uri("output:coverage_report.json")
+    with open(report_file, "w", encoding="utf-8") as f:
+        json.dump(report, f, indent=2)
 
-    report_file = output_dir / "coverage_report.json"
-    report_file.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    # Console summary
+    print("Coverage Report:")
+    for uri, status in report.items():
+        if status is True:
+            marker = "✅"
+        elif status is False:
+            marker = "❌"
+        else:
+            marker = "⚠️"
+        print(f"{marker} {uri} ({status})")
 
-    print(f"Coverage: {covered_terms}/{total_terms} terms ({report['coverage_percent']}%)")
-    print(f"Coverage report written to {report_file}")
+    print(f"\nCoverage report written to {report_file}")
+    return report
+
+
+def main() -> None:
+    generate_report()
+
+
+if __name__ == "__main__":
+    main()

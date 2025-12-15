@@ -1,12 +1,12 @@
-# AIML Glossary  
+# AIML Glossary
 
 {% for entry in glossary %}
-### {{ entry.term }}  
-**Definition:** {{ entry.definition }}  
-**Tags:** {% for tag in entry.tags %}[{{ tag.label }}]({{ tag.url }}){% if not loop.last %}, {% endif %}{% endfor %}  
-**Related Terms:** {% for rel in entry.related_terms %}[{{ rel.label }}]({{ rel.url }}){% if not loop.last %}, {% endif %}{% endfor %}  
-**Examples:** {% for ex in entry.examples %}{{ ex }}{% if not loop.last %}; {% endif %}{% endfor %}  
-**Source:** {{ entry.source }}  
-**Last Updated:** {{ entry.last_updated }}  
+### {{ entry.term }}
+**Definition:** {{ entry.definition }}
+**Tags:** {% for tag in entry.tags %}[{{ tag.label }}]({{ tag.url }}){% if not loop.last %}, {% endif %}{% endfor %}
+**Related Terms:** {% for rel in entry.related_terms %}[{{ rel.label }}]({{ rel.url }}){% if not loop.last %}, {% endif %}{% endfor %}
+**Examples:** {% for ex in entry.examples %}{{ ex }}{% if not loop.last %}; {% endif %}{% endfor %}
+**Source:** {{ entry.source }}
+**Last Updated:** {{ entry.last_updated }}
 
 {% endfor %}

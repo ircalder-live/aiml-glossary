@@ -1,56 +1,56 @@
 # src/clustering.py
+"""
+Unified clustering pipeline.
+Runs both graph-based and semantic clustering, then evaluates results.
+Designed for reproducible local and CI/CD execution with URI-based paths.
+"""
 
-from pathlib import Path
-import json
-from sklearn.metrics import adjusted_rand_score
-import mlflow
-import os
-
-# Force MLflow to use a local directory inside the repo (safe for CI/CD)
-mlflow.set_tracking_uri("file://" + os.path.join(os.getcwd(), "experiments/mlruns"))
-
-# Resolve repo root (two levels up from this file)
-REPO_ROOT = Path(__file__).resolve().parent.parent
+import sys
+from src.cluster_analysis import run_clustering
+from src.semantic_clustering import run_semantic_clustering
+from src.evaluate_clusters import evaluate_clusters
+from src.utils import resolve_uri, load_glossary
 
 
-def run_clustering(
-    glossary_file: Path = REPO_ROOT / "data" / "aiml_glossary.json",
-    output_dir: Path = REPO_ROOT / "output"
-):
-    """
-    Perform a clustering comparison and log results with MLflow.
-    """
-    glossary_file = Path(glossary_file)
-    output_dir = Path(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
+def run_pipeline(
+    glossary_file: str, link_dict_file: str, num_clusters: int = 8
+) -> None:
+    """Run full clustering pipeline: graph clustering, semantic clustering, evaluation."""
+    # Ensure glossary loads cleanly (normalization handled by load_glossary)
+    glossary_dict = load_glossary(glossary_file)
+    if not glossary_dict:
+        raise ValueError("Glossary is empty or invalid.")
 
-    # Load glossary terms
-    with open(glossary_file, "r", encoding="utf-8") as f:
-        glossary = json.load(f)
+    link_dict_path = resolve_uri(link_dict_file)
+    if not link_dict_path.exists():
+        raise FileNotFoundError(f"Link dictionary file not found: {link_dict_path}")
 
-    terms = [entry["term"] for entry in glossary if "term" in entry]
+    print("▶ Running graph-based clustering...")
+    run_clustering(glossary_file, link_dict_file)
 
-    # Dummy clustering comparison (replace with your actual logic)
-    labels_a = [0] * len(terms)
-    labels_b = [1] * len(terms)
-    score = adjusted_rand_score(labels_a, labels_b)
+    print("▶ Running semantic clustering...")
+    run_semantic_clustering(glossary_file, num_clusters=num_clusters)
 
-    results = {
-        "num_terms": len(terms),
-        "adjusted_rand_score": score
-    }
-    results_file = output_dir / "clustering_results.json"
-    with open(results_file, "w", encoding="utf-8") as f:
-        json.dump(results, f, indent=2)
-    print(f"Clustering results written to {results_file}")
+    print("▶ Evaluating clusters...")
+    metrics = evaluate_clusters()
+    print("\n📊 Dashboard Summary")
+    print(metrics)
 
-    # --- MLflow logging ---
-    with mlflow.start_run(run_name="clustering"):
-        mlflow.log_artifact(str(results_file), artifact_path="results")
-        mlflow.log_dict(results, "clustering_summary.json")
 
-    return results
+def main() -> None:
+    """Entry point for CLI execution."""
+    if len(sys.argv) < 3:
+        print(
+            "Usage: python3 -m src.clustering <glossary_file> <link_dict_file> [num_clusters]"
+        )
+        sys.exit(1)
+
+    glossary_file = sys.argv[1]
+    link_dict_file = sys.argv[2]
+    num_clusters = int(sys.argv[3]) if len(sys.argv) > 3 else 8
+
+    run_pipeline(glossary_file, link_dict_file, num_clusters)
 
 
 if __name__ == "__main__":
-    run_clustering()
+    main()

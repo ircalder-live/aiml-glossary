@@ -3,6 +3,7 @@
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
+
 def render_templates(glossary, template_dir: Path, output_dir: Path):
     """
     Render glossary outputs (Markdown, XHTML) using Jinja2 templates.

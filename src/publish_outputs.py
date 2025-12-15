@@ -1,26 +1,45 @@
 # src/publish_outputs.py
+"""
+Publish generated outputs by copying them into the docs directory.
+Intended for CI/CD integration and contributor visibility.
+"""
 
 import shutil
 import sys
 from pathlib import Path
 
-def main():
-    if len(sys.argv) != 3:
-        print("Usage: python3 src/publish_outputs.py <output_dir> <docs_dir>")
+REPO_ROOT = Path(__file__).resolve().parent.parent
+OUTPUT_DIR = REPO_ROOT / "output"
+DOCS_DIR = REPO_ROOT / "docs"
+
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+DOCS_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def publish_outputs(output_dir: Path = OUTPUT_DIR, docs_dir: Path = DOCS_DIR) -> None:
+    """Copy generated outputs into the docs directory for publishing."""
+    if not output_dir.exists():
+        print(f"❌ Output directory not found: {output_dir}")
         sys.exit(1)
 
-    output_dir = Path(sys.argv[1])
-    docs_dir = Path(sys.argv[2])
+    for item in output_dir.iterdir():
+        dest = docs_dir / item.name
+        if item.is_file():
+            shutil.copy(item, dest)
+            print(f"Copied {item} → {dest}")
+        elif item.is_dir():
+            if dest.exists():
+                shutil.rmtree(dest)
+            shutil.copytree(item, dest)
+            print(f"Copied directory {item} → {dest}")
 
-    if not output_dir.exists():
-        raise FileNotFoundError(f"Output directory not found: {output_dir}")
+    print(f"✅ Outputs published to {docs_dir}")
 
-    docs_dir.mkdir(parents=True, exist_ok=True)
 
-    # Copy all files from output_dir into docs_dir
-    for file in output_dir.glob("*"):
-        shutil.copy(file, docs_dir / file.name)
-        print(f"Copied {file} → {docs_dir / file.name}")
+def main() -> None:
+    """Entry point for CLI execution."""
+    publish_outputs()
+
 
 if __name__ == "__main__":
     main()

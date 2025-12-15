@@ -1,7 +1,6 @@
 import os
 import json
 import pandas as pd
-import networkx as nx
 from src import cluster_analysis
 
 

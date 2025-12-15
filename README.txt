@@ -6,7 +6,47 @@ AIML Glossary Project
 
 📖 Overview
 -----------
-This project manages an AIML glossary as a reproducible workflow. It generates Markdown and XHTML outputs, enriches terms with hyperlinks, and analyzes glossary structure as a graph. The workflow is extended with MLflow logging and clustering analysis to track glossary evolution over time and visualize how terms cluster around key concepts.
+# AIML Glossary Workflow
+
+This project uses a **URI‑based workflow** for reproducibility and contributor clarity.
+Instead of fragile filesystem paths, resources are referenced with logical URIs:
+
+- `data:filename.json` → maps to `repo_root/data/filename.json`
+- `output:filename.csv` → maps to `repo_root/output/filename.csv`
+- `visualizations:filename.png` → maps to `repo_root/visualizations/filename.png`
+
+The resolver in `src/utils.py` ensures these URIs work consistently across local runs and CI/CD.
+
+---
+
+## Runbook
+
+The main workflow is exercised through `notebooks/runbook.ipynb`.
+Contributors should run the notebook cell‑by‑cell to generate and verify artifacts.
+
+Expected steps:
+1. **Generate outputs** → `output/terms.csv`, `output/glossary_copy.json`
+2. **Build link dictionary** → `output/link_dictionary.json`
+3. **Enrich glossary** → `output/enriched_glossary.json`
+4. **Graph clustering** → `output/cluster_assignments.csv`, `output/graph_stats.json`, `visualizations/glossary_clusters.png`
+5. **Semantic clustering** → `output/semantic_cluster_assignments.csv`, `visualizations/semantic_clusters.png`
+6. **Evaluate clusters** → `output/ari_metrics.json`
+7. **Coverage report** → `output/coverage_report.json` with ✅/❌ markers
+
+---
+
+## Artifact Checklist
+
+At the bottom of the runbook, a Markdown checklist is provided.
+Contributors should confirm all expected artifacts are present and marked ✅ before committing.
+
+---
+
+## Quick Start
+
+```bash
+# Run the notebook end-to-end
+jupyter nbconvert --execute --to notebook notebooks/runbook.ipynb --output notebooks/runbook_executed.ipynb
 
 ⚡ Quick Start
 --------------
@@ -46,6 +86,7 @@ aiml-glossary-project/
 │   └── mlruns/
 ├── notebooks/           # Optional Jupyter notebooks
 │   └── glossary_analysis.ipynb
+|   └── runbook.ipynb
 ├── requirements.txt     # Python dependencies
 ├── Makefile             # Workflow automation
 └── README.txt           # Project overview

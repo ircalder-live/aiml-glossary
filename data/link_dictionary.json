@@ -1,103 +1,261 @@
 {
-  "Supervised Learning": "#Supervised_Learning",
-  "Regression": "#Regression",
-  "Linear Regression": "https://en.wikipedia.org/wiki/Linear_regression",
-  "Polynomial Regression": "https://en.wikipedia.org/wiki/Polynomial_regression",
-  "Scikit-learn": "https://scikit-learn.org/stable/",
-  "Unsupervised Learning": "#Unsupervised_Learning",
-  "Classification": "#Classification",
-  "Clustering": "#Clustering",
-  "Data Cleaning": "#Data_Cleaning",
-  "Feature Scaling": "#Feature_Scaling",
-  "Dimensionality Reduction": "#Dimensionality_Reduction",
-  "Encoding Categorical Variables": "#Encoding_Categorical_Variables",
-  "Feature Extraction": "#Feature_Extraction",
-  "Cross-Validation": "#Cross-Validation",
-  "Confusion Matrix": "#Confusion_Matrix",
-  "Precision": "#Precision",
-  "Recall": "#Recall",
-  "F1 Score": "#F1_Score",
-  "Hyperparameter Tuning": "#Hyperparameter_Tuning",
-  "Grid Search": "#Grid_Search",
-  "Random Search": "#Random_Search",
-  "Bayesian Optimization": "#Bayesian_Optimization",
-  "Early Stopping": "#Early_Stopping",
-  "Artificial Neural Network": "#Artificial_Neural_Network",
-  "Activation Function": "#Activation_Function",
-  "Backpropagation": "#Backpropagation",
-  "Convolutional Neural Network": "#Convolutional_Neural_Network",
-  "Recurrent Neural Network": "#Recurrent_Neural_Network",
-  "Model Deployment": "#Model_Deployment",
-  "Model Serving": "#Model_Serving",
-  "Monitoring": "#Monitoring",
-  "A/B Testing": "#A/B_Testing",
-  "Rollback": "#Rollback",
-  "Concept Drift": "#Concept_Drift",
-  "Temporal Dependency": "#Temporal_Dependency",
-  "Replay Methods": "#Replay_Methods",
-  "Regularization Methods": "#Regularization_Methods",
-  "Isolation Methods": "#Isolation_Methods",
-  "Symbolic Regression": "#Symbolic_Regression",
-  "Genetic Programming": "#Genetic_Programming",
-  "Randomized Algorithms": "#Randomized_Algorithms",
-  "Computational Complexity": "#Computational_Complexity",
-  "Symbolic AI": "#Symbolic_AI",
-  "Skipgram2": "#Skipgram2",
-  "Skipgram": "#Skipgram",
-  "Word2Vec": "#Word2Vec",
-  "Distribution Hypothesis": "#Distribution_Hypothesis",
-  "Text Representation": "#Text_Representation",
-  "Word Representation": "#Word_Representation",
-  "Simulated Annealing": "#Simulated_Annealing",
-  "Monte Carlo Algorithm": "#Monte_Carlo_Algorithm",
-  "Las Vegas Algorithm": "#Las_Vegas_Algorithm",
-  "Pseudocode": "#Pseudocode",
-  "Continual Learning": "#Continual_Learning",
-  "Random Forest": "#Random_Forest",
-  "Adaptive Random Forest (ARF)": "#Adaptive_Random_Forest_(ARF)",
-  "Ensembles": "#Ensembles",
-  "Naive Bayes": "#Naive_Bayes",
-  "Decision Tree": "#Decision_Tree",
-  "k-Nearest Neighbors (k-NN)": "#k-Nearest_Neighbors_(k-NN)",
-  "Adaptive Machine Learning (Adaptive ML)": "#Adaptive_Machine_Learning_(Adaptive_ML)",
-  "Explainable AI (XAI)": "#Explainable_AI_(XAI)",
-  "Bootstrap Aggregating (Bagging)": "#Bootstrap_Aggregating_(Bagging)",
-  "Ensemble Learning": "#Ensemble_Learning",
-  "Tournament Selection": "#Tournament_Selection",
-  "Parsimony Pressure": "#Parsimony_Pressure",
-  "Bloat": "#Bloat",
-  "Underfitting": "#Underfitting",
-  "Overfitting": "#Overfitting",
-  "Bias-Variance Trade-off": "#Bias-Variance_Trade-off",
-  "Generalization": "#Generalization",
-  "Mutation": "#Mutation",
-  "Crossover": "#Crossover",
-  "Lexicase Selection": "#Lexicase_Selection",
-  "Fitness Function": "#Fitness_Function",
-  "Expression Tree": "#Expression_Tree",
-  "Monte Carlo Tree Search (MCTS)": "#Monte_Carlo_Tree_Search_(MCTS)",
-  "Bayesian Symbolic Regression": "#Bayesian_Symbolic_Regression",
-  "Service‑oriented Computing (SOC)": "#Service‑oriented_Computing_(SOC)",
-  "Implicit Graphs": "#Implicit_Graphs",
-  "Depth First Search (DFS)": "#Depth_First_Search_(DFS)",
-  "Breadth First Search (BFS)": "#Breadth_First_Search_(BFS)",
-  "Graph Connectivity": "#Graph_Connectivity",
-  "Greedy Search (Greedy Algorithm)": "#Greedy_Search_(Greedy_Algorithm)",
-  "Traveling Salesman Problem (TSP)": "#Traveling_Salesman_Problem_(TSP)",
-  "Graph Search": "#Graph_Search",
-  "Tabu Search": "#Tabu_Search",
-  "Word Embedding": "#Word_Embedding",
-  "Softmax Function": "#Softmax_Function",
-  "Causal Mask": "#Causal_Mask",
-  "Sequence-to-Sequence Model": "#Sequence-to-Sequence_Model",
-  "Recurrent Neural Network (RNN)": "#Recurrent_Neural_Network_(RNN)",
-  "BLEU (Bilingual Evaluation Understudy)": "#BLEU_(Bilingual_Evaluation_Understudy)",
-  "WMT Translation Task": "#WMT_Translation_Task",
-  "Constituency Parsing": "#Constituency_Parsing",
-  "Context Vector": "#Context_Vector",
-  "Recurrence": "#Recurrence",
-  "Convolutions": "#Convolutions",
-  "Transformer": "#Transformer",
-  "Self-Attention": "#Self-Attention",
-  "**Definition:**": "#**Definition:**"
+  "Supervised Learning": [
+    "Artificial Intelligence"
+  ],
+  "Unsupervised Learning": [],
+  "Classification": [
+    "Supervised Learning"
+  ],
+  "Regression": [
+    "Supervised Learning"
+  ],
+  "Clustering": [
+    "Supervised Learning",
+    "Unsupervised Learning"
+  ],
+  "Data Cleaning": [],
+  "Feature Scaling": [],
+  "Dimensionality Reduction": [],
+  "Encoding Categorical Variables": [],
+  "Feature Extraction": [
+    "Artificial Intelligence"
+  ],
+  "Cross-Validation": [
+    "Artificial Intelligence",
+    "Generalization"
+  ],
+  "Confusion Matrix": [
+    "Classification"
+  ],
+  "Precision": [],
+  "Recall": [],
+  "F1 Score": [
+    "Classification",
+    "Precision",
+    "Recall"
+  ],
+  "Hyperparameter Tuning": [
+    "Artificial Intelligence"
+  ],
+  "Grid Search": [],
+  "Random Search": [],
+  "Bayesian Optimization": [],
+  "Early Stopping": [
+    "Artificial Intelligence"
+  ],
+  "Artificial Neural Network": [
+    "Neural Network"
+  ],
+  "Activation Function": [],
+  "Backpropagation": [
+    "Artificial Intelligence"
+  ],
+  "Convolutional Neural Network": [],
+  "Recurrent Neural Network": [
+    "Neural Network"
+  ],
+  "Model Deployment": [
+    "Artificial Intelligence"
+  ],
+  "Model Serving": [],
+  "Monitoring": [],
+  "A/B Testing": [],
+  "Rollback": [
+    "Artificial Intelligence"
+  ],
+  "Concept Drift": [],
+  "Temporal Dependency": [],
+  "Replay Methods": [
+    "Continual Learning"
+  ],
+  "Regularization Methods": [
+    "Artificial Intelligence",
+    "Continual Learning"
+  ],
+  "Isolation Methods": [],
+  "Symbolic Regression": [
+    "Regression"
+  ],
+  "Genetic Programming": [],
+  "Randomized Algorithms": [],
+  "Computational Complexity": [],
+  "Symbolic AI": [],
+  "Skipgram": [
+    "Word Embedding",
+    "Word2Vec"
+  ],
+  "Word2Vec": [],
+  "Distribution Hypothesis": [
+    "Word Embedding"
+  ],
+  "Text Representation": [
+    "Word2Vec"
+  ],
+  "Word Representation": [],
+  "Simulated Annealing": [
+    "Neural Network"
+  ],
+  "Monte Carlo Algorithm": [],
+  "Las Vegas Algorithm": [
+    "Artificial Intelligence"
+  ],
+  "Pseudocode": [
+    "Artificial Intelligence"
+  ],
+  "Continual Learning": [
+    "Artificial Intelligence"
+  ],
+  "Random Forest": [
+    "Artificial Intelligence",
+    "Classification",
+    "Decision Tree",
+    "Deep Learning",
+    "Ensemble Learning",
+    "Generalization",
+    "Overfitting",
+    "Regression"
+  ],
+  "Adaptive Random Forest (ARF)": [
+    "Artificial Intelligence",
+    "Concept Drift",
+    "Decision Tree",
+    "Ensemble Learning",
+    "Random Forest"
+  ],
+  "Ensembles": [
+    "Generalization"
+  ],
+  "Naive Bayes": [
+    "Artificial Intelligence",
+    "Classification"
+  ],
+  "Decision Tree": [
+    "Classification",
+    "Regression",
+    "Supervised Learning"
+  ],
+  "k-Nearest Neighbors (k-NN)": [
+    "Artificial Intelligence",
+    "Classification",
+    "Neural Network",
+    "Regression"
+  ],
+  "Adaptive Machine Learning (Adaptive ML)": [
+    "Artificial Intelligence",
+    "Concept Drift"
+  ],
+  "Explainable AI (XAI)": [
+    "Artificial Intelligence"
+  ],
+  "Bootstrap Aggregating (Bagging)": [
+    "Artificial Intelligence",
+    "Decision Tree",
+    "Ensemble Learning",
+    "Overfitting"
+  ],
+  "Ensemble Learning": [
+    "Artificial Intelligence",
+    "Ensembles",
+    "Generalization"
+  ],
+  "Tournament Selection": [
+    "Machine Learning"
+  ],
+  "Parsimony Pressure": [
+    "Bloat",
+    "Fitness Function",
+    "Genetic Programming"
+  ],
+  "Bloat": [
+    "Crossover",
+    "Expression Tree",
+    "Genetic Programming",
+    "Mutation"
+  ],
+  "Underfitting": [
+    "Artificial Intelligence"
+  ],
+  "Overfitting": [
+    "Artificial Intelligence",
+    "Generalization"
+  ],
+  "Bias-Variance Trade-off": [],
+  "Generalization": [
+    "Artificial Intelligence",
+    "Overfitting",
+    "Supervised Learning"
+  ],
+  "Mutation": [
+    "Artificial Intelligence"
+  ],
+  "Crossover": [],
+  "Lexicase Selection": [
+    "Artificial Intelligence"
+  ],
+  "Fitness Function": [],
+  "Expression Tree": [
+    "Regression",
+    "Symbolic Regression"
+  ],
+  "Monte Carlo Tree Search (MCTS)": [
+    "Backpropagation"
+  ],
+  "Bayesian Symbolic Regression": [
+    "Artificial Intelligence",
+    "Expression Tree",
+    "Regression",
+    "Symbolic Regression"
+  ],
+  "Service\u2011oriented Computing (SOC)": [],
+  "Implicit Graphs": [],
+  "Depth First Search (DFS)": [],
+  "Breadth First Search (BFS)": [],
+  "Graph Connectivity": [
+    "Artificial Intelligence",
+    "Neural Network"
+  ],
+  "Greedy Search (Greedy Algorithm)": [],
+  "Traveling Salesman Problem (TSP)": [],
+  "Graph Search": [
+    "Neural Network"
+  ],
+  "Tabu Search": [],
+  "Word Embedding": [],
+  "Softmax Function": [],
+  "Causal Mask": [
+    "Artificial Intelligence"
+  ],
+  "Sequence-to-Sequence Model": [
+    "Context Vector",
+    "Neural Network",
+    "Transformer"
+  ],
+  "Recurrent Neural Network (RNN)": [
+    "Artificial Intelligence"
+  ],
+  "BLEU (Bilingual Evaluation Understudy)": [
+    "Artificial Intelligence",
+    "Precision"
+  ],
+  "WMT Translation Task": [
+    "Artificial Intelligence"
+  ],
+  "Constituency Parsing": [],
+  "Context Vector": [
+    "Sequence-to-Sequence Model"
+  ],
+  "Recurrence": [
+    "Neural Network",
+    "Recurrent Neural Network"
+  ],
+  "Convolutions": [
+    "Neural Network",
+    "Self-Attention",
+    "Transformer"
+  ],
+  "Transformer": [
+    "Recurrence",
+    "Self-Attention"
+  ],
+  "Self-Attention": []
 }

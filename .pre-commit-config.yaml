@@ -1,0 +1,31 @@
+# .pre-commit-config.yaml
+# Pre-commit hooks for linting, formatting, and hygiene
+# Place this file in the repo root and run:
+#   pip install pre-commit
+#   pre-commit install
+#   pre-commit run --all-files
+
+repos:
+  # Ruff: fast Python linter
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9   # latest stable release
+    hooks:
+      - id: ruff
+        args: [--fix]   # auto-fix trivial issues (unused imports, formatting)
+        files: ^src/|^tests/   # only lint scripts and tests, not notebooks
+
+  # Black: opinionated Python formatter
+  - repo: https://github.com/psf/black
+    rev: 24.10.0  # latest stable release
+    hooks:
+      - id: black
+        language_version: python3
+        files: ^src/|^tests/
+
+  # Pre-commit built-in hooks for hygiene
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-merge-conflict
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
