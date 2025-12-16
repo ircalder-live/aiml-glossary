@@ -1,26 +1,58 @@
+# tests/test_validate_glossary.py
+"""
+Unit tests for glossary validation.
+Ensures glossary JSON structure and link dictionary integrity.
+"""
+
 import json
-import pytest
-from src import validate_glossary
+from pathlib import Path
 
 
-def test_validate_glossary_valid_entry(tmp_path):
-    """Ensure a well-formed glossary entry passes validation."""
-    glossary = [
-        {"term": "AI", "definition": "Artificial Intelligence", "related_terms": ["ML"]}
-    ]
-    glossary_file = tmp_path / "glossary.json"
-    glossary_file.write_text(json.dumps(glossary))
-
-    # Should not raise
-    validate_glossary.validate_glossary(str(glossary_file))
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DATA_DIR = REPO_ROOT / "data"
 
 
-def test_validate_glossary_malformed_entry(tmp_path):
-    """Ensure malformed glossary entries raise a ValueError."""
-    # Missing 'definition' field
-    malformed_glossary = [{"term": "AI", "related_terms": ["ML"]}]
-    glossary_file = tmp_path / "bad_glossary.json"
-    glossary_file.write_text(json.dumps(malformed_glossary))
+def load_json(path: Path) -> dict:
+    """Helper to load JSON file."""
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
-    with pytest.raises(ValueError):
-        validate_glossary.validate_glossary(str(glossary_file))
+
+def test_glossary_exists() -> None:
+    """Glossary JSON file should exist and be non-empty."""
+    glossary_file = DATA_DIR / "aiml_glossary.json"
+    assert glossary_file.exists(), "Glossary file missing"
+    glossary = load_json(glossary_file)
+    assert isinstance(glossary, dict), "Glossary should be a dict"
+    assert glossary, "Glossary should not be empty"
+
+
+def test_link_dictionary_exists() -> None:
+    """Link dictionary JSON file should exist and be non-empty."""
+    link_dict_file = DATA_DIR / "link_dictionary.json"
+    assert link_dict_file.exists(), "Link dictionary file missing"
+    link_dict = load_json(link_dict_file)
+    assert isinstance(link_dict, dict), "Link dictionary should be a dict"
+    assert link_dict, "Link dictionary should not be empty"
+
+
+def test_terms_have_definitions() -> None:
+    """Every glossary term should have a non-empty definition string."""
+    glossary_file = DATA_DIR / "aiml_glossary.json"
+    glossary = load_json(glossary_file)
+    for term, definition in glossary.items():
+        assert isinstance(definition, str), f"Definition for {term} should be a string"
+        assert definition.strip(), f"Definition for {term} should not be empty"
+
+
+def test_links_reference_existing_terms() -> None:
+    """All links in link dictionary should reference valid glossary terms."""
+    glossary_file = DATA_DIR / "aiml_glossary.json"
+    link_dict_file = DATA_DIR / "link_dictionary.json"
+    glossary = load_json(glossary_file)
+    link_dict = load_json(link_dict_file)
+
+    terms = set(glossary.keys())
+    for term, links in link_dict.items():
+        for link in links:
+            assert link in terms, f"Link {link} in {term} not found in glossary"

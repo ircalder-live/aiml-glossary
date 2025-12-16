@@ -1,8 +1,9 @@
 AIML Glossary Project
 =====================
+AIML Glossary
 
-![CI](https://github.com/ircalder-live/aiml-glossary/actions/workflows/ci.yml/badge.svg)
-![Deploy](https://github.com/ircalder-live/aiml-glossary/actions/workflows/pages.yml/badge.svg)
+CI build status:
+https://github.com/ircalder-live/aiml-glossary/actions/workflows/ci.yml/badge.svg
 
 📖 Overview
 -----------

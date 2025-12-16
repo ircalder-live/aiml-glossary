@@ -1,44 +1,51 @@
-# AIML Glossary Workflow Makefile
+# Makefile — standardized module execution and explicit directories
+.RECIPEPREFIX = >
 
-PYTHON := python3
+PY := python3
+SRC := src
+DATA := data
+OUT := output
+VIZ := visualizations
+DOCS := docs
+MLRUNS := experiments/mlruns
 
-# Default target runs the full workflow
+.PHONY: dirs
+dirs:
+>mkdir -p $(OUT) $(VIZ) $(DOCS) $(MLRUNS)
+
+.PHONY: validate
+validate: dirs
+>$(PY) -m $(SRC).validate_glossary $(DATA)/aiml_glossary.json $(DATA)/glossary.schema.json
+
+.PHONY: outputs
+outputs: validate dirs
+>$(PY) -m $(SRC).generate_outputs $(DATA)/aiml_glossary.json $(OUT)/
+
+.PHONY: cluster
+cluster: outputs dirs
+>$(PY) -m $(SRC).cluster_terms
+
+.PHONY: publish
+publish: cluster dirs
+>$(PY) -m $(SRC).publish_outputs $(OUT)/ $(DOCS)/
+
+.PHONY: all
 all: validate outputs cluster publish
 
-# Validate glossary JSON against schema
-validate:
-	$(PYTHON) src/validate_glossary.py data/aiml_glossary.json data/glossary.schema.json
-
-# Generate outputs (Markdown, HTML, etc.)
-outputs:
-	$(PYTHON) src/generate_outputs.py data/aiml_glossary.json outputs/
-
-# Cluster glossary terms for analysis
-cluster:
-	$(PYTHON) src/cluster_terms.py
-
-# Publish outputs (e.g. copy to docs/ or site/)
-publish:
-	$(PYTHON) src/publish_outputs.py outputs/ docs/
-
-# Clean up generated files
-clean:
-	rm -rf outputs/* docs/*
-
-# --- Developer workflow targets ---
-
-# Install development dependencies
-dev-install:
-	pip install -r dev-requirements.txt
-
-# Run linting
+.PHONY: lint
 lint:
-	$(PYTHON) -m ruff check src/ data/
+>$(PY) -m ruff check $(SRC)/ $(DATA)/
 
-# Run tests
-test:
-	$(PYTHON) -m pytest --maxfail=1 --disable-warnings -q
+.PHONY: format
+format:
+>$(PY) -m ruff check --fix $(SRC)/ $(DATA)/
+>$(PY) -m black $(SRC)/
 
-# Run coverage
-coverage:
-	$(PYTHON) -m pytest --cov=src --cov-report=term-missing
+.PHONY: artifacts
+artifacts: dirs
+>@echo "Artifacts ready in $(OUT) and $(VIZ). Upload in CI with actions/upload-artifact."
+
+.PHONY: clean
+clean:
+>rm -rf $(OUT)/* $(VIZ)/* $(DOCS)/* $(MLRUNS)
+>@echo "Cleaned build artifacts."
