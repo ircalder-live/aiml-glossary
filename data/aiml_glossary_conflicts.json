@@ -1,0 +1,52 @@
+{
+  "simulated-annealing": [
+    {
+      "id": 85,
+      "term": "Simulated Annealing",
+      "definition": "A probabilistic optimization technique inspired by metallurgy's annealing process. It explores solution spaces by accepting worse solutions with a probability that decreases over time to avoid local optima.",
+      "tags": [
+        "optimization",
+        "metaheuristic",
+        "probabilistic_algorithm",
+        "search"
+      ],
+      "related_terms": [
+        "Local Search",
+        "Metropolis Algorithm",
+        "Cooling Schedule",
+        "Hill Climbing"
+      ],
+      "examples": [
+        "Temperature T initialized high, neighbor solution S′ accepted if cost lower or with probability exp(–ΔE/T)."
+      ],
+      "source": "GeeksforGeeks, Cornell Open Textbook",
+      "last_updated": "2025-10-25",
+      "key_slug": "simulated-annealing-2",
+      "original_term": "Simulated Annealing"
+    }
+  ],
+  "ensembles": [
+    {
+      "id": 93,
+      "term": "Ensembles",
+      "definition": "Techniques combining predictions from multiple models—through bagging, boosting, stacking, or voting—to enhance accuracy, reduce variance, and improve generalization. [geeksforgeeks.org], [arxiv.org]",
+      "tags": [
+        "Model Aggregation",
+        "Generalization",
+        "Robustness",
+        "NLP Methods"
+      ],
+      "related_terms": [
+        "Bagging",
+        "Boosting",
+        "Stacking",
+        "Random Forests"
+      ],
+      "examples": [],
+      "source": "GeeksforGeeks overview (2025); Jia et al. 2023 review on ensemble deep learning in NLP. [geeksforgeeks.org], [arxiv.org]",
+      "last_updated": "2025-11-02",
+      "key_slug": "ensembles-2",
+      "original_term": "Ensembles"
+    }
+  ]
+}
