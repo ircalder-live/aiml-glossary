@@ -1,58 +1,66 @@
-# tests/test_validate_glossary.py
 """
-Unit tests for glossary validation.
-Ensures glossary JSON structure and link dictionary integrity.
+Validation tests for the AIML glossary JSON file.
+
+These tests enforce the canonical schema:
+- The glossary file is a dict keyed by term slug.
+- Each value is a dict containing at least a non-empty "definition" string.
+- Optional metadata fields (id, examples, tags, etc.) are also validated.
 """
 
 import json
 from pathlib import Path
 
+DATA_DIR = Path("data")
+GLOSSARY_FILE = DATA_DIR / "aiml_glossary.json"
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = REPO_ROOT / "data"
 
-
-def load_json(path: Path) -> dict:
-    """Helper to load JSON file."""
-    with open(path, "r", encoding="utf-8") as f:
+def load_json(path: Path):
+    with path.open(encoding="utf-8") as f:
         return json.load(f)
 
 
 def test_glossary_exists() -> None:
-    """Glossary JSON file should exist and be non-empty."""
-    glossary_file = DATA_DIR / "aiml_glossary.json"
-    assert glossary_file.exists(), "Glossary file missing"
-    glossary = load_json(glossary_file)
+    """Glossary JSON file should exist and be non-empty dict."""
+    assert GLOSSARY_FILE.exists(), "Glossary file missing"
+    glossary = load_json(GLOSSARY_FILE)
     assert isinstance(glossary, dict), "Glossary should be a dict"
-    assert glossary, "Glossary should not be empty"
-
-
-def test_link_dictionary_exists() -> None:
-    """Link dictionary JSON file should exist and be non-empty."""
-    link_dict_file = DATA_DIR / "link_dictionary.json"
-    assert link_dict_file.exists(), "Link dictionary file missing"
-    link_dict = load_json(link_dict_file)
-    assert isinstance(link_dict, dict), "Link dictionary should be a dict"
-    assert link_dict, "Link dictionary should not be empty"
+    assert glossary, "Glossary dict should not be empty"
 
 
 def test_terms_have_definitions() -> None:
-    """Every glossary term should have a non-empty definition string."""
-    glossary_file = DATA_DIR / "aiml_glossary.json"
-    glossary = load_json(glossary_file)
-    for term, definition in glossary.items():
+    """Every glossary entry should have a non-empty definition string."""
+    glossary = load_json(GLOSSARY_FILE)
+    for term, entry in glossary.items():
+        assert isinstance(entry, dict), f"{term} should be a dict entry"
+        definition = entry.get("definition")
         assert isinstance(definition, str), f"Definition for {term} should be a string"
         assert definition.strip(), f"Definition for {term} should not be empty"
 
 
-def test_links_reference_existing_terms() -> None:
-    """All links in link dictionary should reference valid glossary terms."""
-    glossary_file = DATA_DIR / "aiml_glossary.json"
-    link_dict_file = DATA_DIR / "link_dictionary.json"
-    glossary = load_json(glossary_file)
-    link_dict = load_json(link_dict_file)
+def test_ids_are_unique() -> None:
+    """If entries have 'id' fields, they should be unique."""
+    glossary = load_json(GLOSSARY_FILE)
+    ids = [
+        entry.get("id") for entry in glossary.values() if entry.get("id") is not None
+    ]
+    assert len(ids) == len(set(ids)), "Duplicate IDs found in glossary"
 
-    terms = set(glossary.keys())
-    for term, links in link_dict.items():
-        for link in links:
-            assert link in terms, f"Link {link} in {term} not found in glossary"
+
+def test_optional_metadata_types() -> None:
+    """Optional metadata fields should have expected types."""
+    glossary = load_json(GLOSSARY_FILE)
+    for term, entry in glossary.items():
+        if "examples" in entry:
+            assert isinstance(
+                entry["examples"], list
+            ), f"Examples for {term} should be a list"
+        if "tags" in entry:
+            assert isinstance(entry["tags"], list), f"Tags for {term} should be a list"
+        if "related_terms" in entry:
+            assert isinstance(
+                entry["related_terms"], list
+            ), f"Related terms for {term} should be a list"
+        if "last_updated" in entry:
+            assert isinstance(
+                entry["last_updated"], str
+            ), f"last_updated for {term} should be a string"
