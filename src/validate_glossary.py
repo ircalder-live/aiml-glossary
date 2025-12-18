@@ -17,10 +17,18 @@ def validate_glossary(glossary_file: Path, schema_file: Path = None):
         raise FileNotFoundError(f"Glossary file not found: {glossary_file}")
 
     with open(glossary_file, "r", encoding="utf-8") as f:
-        glossary = json.load(f)
+        data = json.load(f)
+
+    # Handle both dict-of-entries and list-of-entries formats
+    if isinstance(data, dict):
+        glossary_entries = data.values()
+    elif isinstance(data, list):
+        glossary_entries = data
+    else:
+        raise ValueError("Glossary JSON must be a dict or list")
 
     errors = []
-    for i, entry in enumerate(glossary, start=1):
+    for i, entry in enumerate(glossary_entries, start=1):
         if "term" not in entry:
             errors.append(f"Entry {i} missing 'term'")
         if "definition" not in entry:
@@ -30,7 +38,6 @@ def validate_glossary(glossary_file: Path, schema_file: Path = None):
         print("❌ Validation failed:")
         for e in errors:
             print(" -", e)
-        # Raise so tests can catch it
         raise ValueError("Glossary validation failed")
 
     print("✅ Glossary validation passed")
