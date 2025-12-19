@@ -40,9 +40,13 @@ def evaluate_clusters(
     semantic_assignments_file = resolve_uri(semantic_assignments_uri)
 
     if not graph_assignments_file.exists():
-        raise FileNotFoundError(f"Graph assignments file not found: {graph_assignments_file}")
+        raise FileNotFoundError(
+            f"Graph assignments file not found: {graph_assignments_file}"
+        )
     if not semantic_assignments_file.exists():
-        raise FileNotFoundError(f"Semantic assignments file not found: {semantic_assignments_file}")
+        raise FileNotFoundError(
+            f"Semantic assignments file not found: {semantic_assignments_file}"
+        )
 
     # Load graph assignments
     graph_assignments = {}
@@ -60,7 +64,9 @@ def evaluate_clusters(
 
     # Compute overlap stats
     common_terms = set(graph_assignments.keys()) & set(semantic_assignments.keys())
-    agreements = sum(1 for t in common_terms if graph_assignments[t] == semantic_assignments[t])
+    agreements = sum(
+        1 for t in common_terms if graph_assignments[t] == semantic_assignments[t]
+    )
     total = len(common_terms)
     agreement_ratio = agreements / total if total > 0 else 0.0
 
@@ -88,8 +94,12 @@ def evaluate_clusters(
     # Log to MLflow
     try:
         with mlflow.start_run(run_name="evaluate_clusters", nested=True):
-            mlflow.log_artifact(str(graph_stats_path), artifact_path="cluster_evaluation")
-            mlflow.log_artifact(str(ari_metrics_path), artifact_path="cluster_evaluation")
+            mlflow.log_artifact(
+                str(graph_stats_path), artifact_path="cluster_evaluation"
+            )
+            mlflow.log_artifact(
+                str(ari_metrics_path), artifact_path="cluster_evaluation"
+            )
             mlflow.log_metric("agreement_ratio", agreement_ratio)
             mlflow.log_metric("adjusted_rand_index", ari_score)
             mlflow.log_param("total_terms", total)

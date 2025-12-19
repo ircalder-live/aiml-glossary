@@ -9,7 +9,7 @@ import mlflow
 def enrich_glossary(
     glossary_json: str,
     link_dict_json: str,
-    output_file: str = "data/enriched_glossary.json"
+    output_file: str = "data/enriched_glossary.json",
 ):
     """
     Enrich glossary entries with related terms from the link dictionary.
@@ -66,7 +66,9 @@ def enrich_glossary(
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("Usage: python -m src.enrich_glossary <glossary_json> <link_dict_json> [output_file]")
+        print(
+            "Usage: python -m src.enrich_glossary <glossary_json> <link_dict_json> [output_file]"
+        )
         sys.exit(1)
 
     glossary_json = sys.argv[1]

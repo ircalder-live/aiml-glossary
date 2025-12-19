@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 def run_clustering(
     glossary_json: str,
     link_dict_json: str,
-    output_file: str = "data/cluster_assignments.csv"
+    output_file: str = "data/cluster_assignments.csv",
 ):
     """
     Perform graph-based clustering using glossary and link dictionary.
@@ -43,7 +43,7 @@ def run_clustering(
 
     # Load glossary
     with open(glossary_path, "r", encoding="utf-8") as f:
-        glossary_dict = json.load(f)
+        json.load(f)
 
     # Load link dictionary
     with open(link_dict_path, "r", encoding="utf-8") as f:
@@ -84,7 +84,9 @@ def run_clustering(
     node_colors = [assignments.get(node, -1) for node in G.nodes()]
     plt.figure(figsize=(10, 8))
     pos = nx.spring_layout(G, seed=42)
-    nx.draw_networkx_nodes(G, pos, node_color=node_colors, cmap=plt.cm.tab20, node_size=100)
+    nx.draw_networkx_nodes(
+        G, pos, node_color=node_colors, cmap=plt.cm.tab20, node_size=100
+    )
     nx.draw_networkx_edges(G, pos, alpha=0.3)
     nx.draw_networkx_labels(G, pos, font_size=8)
     plt.axis("off")
@@ -98,7 +100,10 @@ def run_clustering(
         with mlflow.start_run(run_name="graph_clustering", nested=True):
             nx.write_gml(G, str(repo_root / "data/clustering_graph.gml"))
             mlflow.log_artifact(str(output_path), artifact_path="graph_clusters")
-            mlflow.log_artifact(str(repo_root / "data/clustering_graph.gml"), artifact_path="graph_clusters")
+            mlflow.log_artifact(
+                str(repo_root / "data/clustering_graph.gml"),
+                artifact_path="graph_clusters",
+            )
             mlflow.log_artifact(str(viz_path), artifact_path="graph_clusters")
             mlflow.log_param("nodes", G.number_of_nodes())
             mlflow.log_param("edges", G.number_of_edges())
@@ -112,7 +117,9 @@ def run_clustering(
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("Usage: python -m src.cluster_analysis <glossary_json> <link_dict_json> [output_file]")
+        print(
+            "Usage: python -m src.cluster_analysis <glossary_json> <link_dict_json> [output_file]"
+        )
         sys.exit(1)
 
     glossary_json = sys.argv[1]

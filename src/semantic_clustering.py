@@ -20,7 +20,7 @@ from sklearn.decomposition import PCA
 def run_semantic_clustering(
     glossary_json: str,
     output_file: str = "data/semantic_cluster_assignments.csv",
-    n_clusters: int = 10
+    n_clusters: int = 10,
 ):
     """
     Perform semantic clustering using embeddings.
@@ -72,7 +72,7 @@ def run_semantic_clustering(
     reduced = pca.fit_transform(embeddings)
 
     plt.figure(figsize=(10, 8))
-    scatter = plt.scatter(reduced[:, 0], reduced[:, 1], c=clusters, cmap=plt.cm.tab20, s=30)
+    plt.scatter(reduced[:, 0], reduced[:, 1], c=clusters, cmap=plt.cm.tab20, s=30)
     plt.title("Semantic Clusters (PCA projection)")
     plt.xlabel("PC1")
     plt.ylabel("PC2")
@@ -97,11 +97,15 @@ def run_semantic_clustering(
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python -m src.semantic_clustering <glossary_json> [output_file] [n_clusters]")
+        print(
+            "Usage: python -m src.semantic_clustering <glossary_json> [output_file] [n_clusters]"
+        )
         sys.exit(1)
 
     glossary_json = sys.argv[1]
-    output_file = sys.argv[2] if len(sys.argv) > 2 else "data/semantic_cluster_assignments.csv"
+    output_file = (
+        sys.argv[2] if len(sys.argv) > 2 else "data/semantic_cluster_assignments.csv"
+    )
     n_clusters = int(sys.argv[3]) if len(sys.argv) > 3 else 10
 
     run_semantic_clustering(glossary_json, output_file, n_clusters)

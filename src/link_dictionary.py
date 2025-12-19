@@ -6,7 +6,9 @@ import sys
 import mlflow
 
 
-def build_link_dictionary(glossary_json: str, output_file: str = "link_dictionary.json"):
+def build_link_dictionary(
+    glossary_json: str, output_file: str = "link_dictionary.json"
+):
     """
     Build a link dictionary mapping each term to related terms found in its definition text.
     - Resolves paths relative to repo root.

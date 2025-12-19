@@ -31,7 +31,9 @@ def generate(glossary_json: str = "data/aiml_glossary.json", output_dir: str = "
     json_file = output_path / "glossary_copy.json"
 
     with open(csv_file, "w", encoding="utf-8") as f:
-        f.write("slug,term,definition,tags,related_terms,examples,source,last_updated\n")
+        f.write(
+            "slug,term,definition,tags,related_terms,examples,source,last_updated\n"
+        )
         for slug, entry in glossary_dict.items():
             term = entry.get("term", slug)
             definition = entry.get("definition", "")
@@ -107,14 +109,18 @@ def generate_report(output_file: str = "data/coverage_report.json"):
     # Overall coverage
     overall_present = sum(1 for v in coverage.values() if v)
     overall_total = len(coverage)
-    print(f"\nOverall coverage: {overall_present}/{overall_total} files = {overall_present/overall_total:.0%}")
+    print(
+        f"\nOverall coverage: {overall_present}/{overall_total} files = {overall_present/overall_total:.0%}"
+    )
     print(f"Coverage report written to {output_path}")
 
     # --- Write Markdown summary ---
     md_path = repo_root / "data/coverage_report.md"
     lines = []
     lines.append("# ✅ Coverage Summary\n")
-    lines.append("This report shows the presence and status of all canonical artifacts.\n\n")
+    lines.append(
+        "This report shows the presence and status of all canonical artifacts.\n\n"
+    )
 
     # Data artifacts table
     lines.append("## 📁 Data Artifacts\n")
