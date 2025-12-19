@@ -11,15 +11,15 @@ from src.utils import resolve_uri, load_glossary
 
 EXPECTED_ARTIFACTS = [
     "data:aiml_glossary.json",
-    "output:terms.csv",
-    "output:glossary_copy.json",
-    "output:link_dictionary.json",
-    "output:enriched_glossary.json",
-    "output:cluster_assignments.csv",
-    "output:semantic_cluster_assignments.csv",
-    "output:graph_stats.json",
-    "output:ari_metrics.json",
-    "output:coverage_report.json",  # report itself
+    "data:terms.csv",
+    "data:glossary_copy.json",
+    "data:link_dictionary.json",
+    "data:enriched_glossary.json",
+    "data:cluster_assignments.csv",
+    "data:semantic_cluster_assignments.csv",
+    "data:graph_stats.json",
+    "data:ari_metrics.json",
+    "data:coverage_report.json",
     "visualizations:glossary_clusters.png",
     "visualizations:semantic_clusters.png",
 ]
@@ -44,7 +44,7 @@ def generate_report() -> dict:
         report[uri] = path.exists()
 
     # Save report
-    report_file = resolve_uri("output:coverage_report.json")
+    report_file = resolve_uri("data/coverage_report.json")
     with open(report_file, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2)
 
