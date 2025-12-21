@@ -1,29 +1,36 @@
 # Development requirements for AIML Glossary Project
 
-# Testing framework
+# -------------------------
+# Testing & Coverage
+# -------------------------
 pytest==8.3.3
-
-# Linting and style checks
-ruff==0.6.9
-flake8==7.1.1   # Added to support make lint in CI
-
-# Coverage reporting
+pytest-cov==5.0.0
 coverage==7.6.1
-pytest-cov==5.0.0   # Added to enable pytest --cov options
 
-# Optional: pre-commit hooks for consistent formatting
+# -------------------------
+# Linting & Formatting
+# -------------------------
+ruff==0.6.9
+black==24.10.0
+flake8==7.1.1   # Only needed if CI uses flake8 explicitly
+
+# -------------------------
+# Pre-commit hooks
+# -------------------------
 pre-commit==4.0.1
 
-
-# Notes:
-# pytest: runs your unit tests (make test).
-# ruff: fast linter used in your Makefile (make lint).
-# flake8: required by CI workflow (make lint).
-# coverage: optional, but useful if you want to measure test coverage.
-# pytest-cov: pytest plugin to integrate coverage reporting (needed for make coverage).
-# pre-commit: optional, lets you enforce linting/formatting before commits.
-# Usage: Install dev dependencies separately from runtime.
-# $ pip install -r dev-requirements.txt
-# This keeps your production environment lean while giving contributors the right tools for development.
-# You can customize this file by adding other dev tools as needed.
-# Remember to keep versions in sync with requirements.txt where applicable.
+# -------------------------
+# Runtime dependencies needed for tests
+# (Tests import these, so they must be available in dev env)
+# -------------------------
+networkx==3.2.1
+matplotlib==3.9.2
+scikit-learn==1.5.2
+pandas==2.2.2
+numpy==2.1.2
+jinja2==3.1.4
+python-louvain==0.16
+jsonschema>=4.19,<5
+mlflow==2.16.2
+matplotlib-venn>=0.11
+jupyter==1.0.0
